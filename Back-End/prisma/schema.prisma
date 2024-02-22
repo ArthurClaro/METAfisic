@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  Masculino
+  Feminino
+  Outro
+}
+
+model User {
+  id    String @id
+  name  String
+  email String @unique
+
+  password String
+
+  gender    Gender   @default(Outro)
+  height    String
+  weight    String
+  createdAt DateTime @default(now())
+// date somente 
+
+
+  // grupoMusculares[]
+  musics Music[]
+}
+
+model Music {
+  id          String  @id
+  name        String
+  album       String
+  artist      String
+  year        String
+  genre       String
+  cover_image String?
+  music_url   String?
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
+}
+
+// relations :::  1:N / 1:1 / N:N
+// https://vimeo.com/908253234/94de9f79c0?share=copy
+// min: 59:00

@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    width: 100%;
+
+    &>label {
+        margin: 12px 0px;
+    }
+
+    @media (max-width:420px) {
+        width: 100%;
+
+    }
+}
