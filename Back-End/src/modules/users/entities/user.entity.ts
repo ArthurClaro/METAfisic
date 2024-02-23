@@ -8,8 +8,8 @@ export class User {
 
     gender: "Masculino" | "Feminino" | "Outro" 
     // "ENUM"
-    height: string
-    weight: string
+    height: number
+    weight: number
     createdAt: Date
 
     @Exclude()

@@ -186,8 +186,27 @@ export const ExampleProvider = ({ children }) => {
         }
     }
 
+
+    // ///////////////////////////////////////////////////////////////////
+
+    const userPost = async (formData) => {
+        try {
+            const { data } = await api.post('/users', formData);
+            toastSuccess('Redirecionando para página de login.', 2000)
+            setTimeout(() => {
+                navigate('/')
+            }, 2000);
+
+            console.log(data)
+
+        } catch (error) {
+            console.log(error.message)
+            toastErro('E-mail já cadastrado !', 3000)
+        }
+    }
+
     return (
-        <ExampleContext.Provider value={{ delClient, clientLogin, editingClient, seteditingClient, pacthClients, setIsOpenClient, isOpenClient, getUser, userClient, clientPost, toastSuccess, toastErro, setLista, user, userLogout, isOpen, setIsOpen, modalRef, buttonRef, isOpen2, setIsOpen2, setUser, lista }}>
+        <ExampleContext.Provider value={{userPost, delClient, clientLogin, editingClient, seteditingClient, pacthClients, setIsOpenClient, isOpenClient, getUser, userClient, clientPost, toastSuccess, toastErro, setLista, user, userLogout, isOpen, setIsOpen, modalRef, buttonRef, isOpen2, setIsOpen2, setUser, lista }}>
             {children}
         </ExampleContext.Provider>
     )

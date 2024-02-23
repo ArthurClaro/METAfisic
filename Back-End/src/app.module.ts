@@ -4,9 +4,12 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { MusicsModule } from './modules/musics/musics.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { GroupsMusclesModule } from './modules/groups-muscles/groups-muscles.module';
+import { TrainingModule } from './modules/training/training.module';
+import { DaysModule } from './modules/days/days.module';
 
 @Module({
-  imports: [UsersModule, MusicsModule, AuthModule],
+  imports: [UsersModule, MusicsModule, AuthModule, GroupsMusclesModule, TrainingModule, DaysModule],
   controllers: [AppController],
   providers: [AppService],
 })

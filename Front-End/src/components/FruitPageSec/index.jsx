@@ -69,15 +69,29 @@ function FruitPageSec() {
     const listaDeIdCorreto = treinoLista.filter((person) => person.treinoId == 6);
     // console.log(listaDeIdCorreto)
 
-    listaALL.forEach(element => {
-        const numberLista = treinoLista.filter((ttt) => ttt.treinoId == element.id)
 
-        // console.log(element.treinoId)
-        console.log(numberLista)
-        // if (element.treinoId == numberLista) {
-        //     // console.log(element)
-        // }
-    });
+
+
+
+    const [listaALL2, setlistaALL2] = useState([]);
+
+    const trainingList = () => {
+        listaALL.forEach(element => {
+            const list = treinoLista.filter((ttt) => ttt.daysId == element.id)
+            // return list
+            setlistaALL2(list)
+            // console.log(list)
+        })
+    }
+
+    useEffect(() => {
+            trainingList()
+    }, []);
+
+    console.log(listaALL2)
+
+
+
 
     // ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -102,8 +116,8 @@ function FruitPageSec() {
     }
 
     // ////////////////////////////////////////////////////////////////////////////////////////
-    // const data = new Date().getFullYear()
-    // console.log(data)
+    const data = new Date().toLocaleDateString()
+    console.log(data)
 
     return (
         <>

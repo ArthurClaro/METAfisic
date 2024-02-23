@@ -17,22 +17,92 @@ enum Gender {
 }
 
 model User {
-  id    String @id
+  id    String @id @default(uuid())
   name  String
   email String @unique
 
   password String
 
   gender    Gender   @default(Outro)
-  height    String
-  weight    String
+  height    Int
+  weight    Int
   createdAt DateTime @default(now())
-// date somente 
-
+  // date somente 
 
   // grupoMusculares[]
   musics Music[]
+
+  day Day[]
 }
+
+model GroupsMuscle {
+  id   String @id @default(uuid())
+  nome String @unique
+  // chest    ChestDay[]
+  // cardio   CardioDay[]
+  // day      Int
+  day  Day[]
+  // training Training[]
+
+  // diasTreinados       String
+  // dias      String
+  // volTotalTreinoDiaAnterior Int
+}
+
+model Day {
+  id       String @id @default(uuid())
+  category String
+
+  createdAt String
+
+  training  Training[]
+
+  GroupsMuscle GroupsMuscle @relation(fields: [category], references: [nome])
+  User         User         @relation(fields: [userId], references: [id])
+  userId       String
+}
+
+model Training {
+  id          String @id @default(uuid())
+  name        String
+  serie       Int
+  kg          Int
+  repetitions Int
+  volume      Int
+  // cardiogDay  CardioDay? @relation(fields: [cardioDayId], references: [id])
+  // cardioDayId String?
+  // chestDay    ChestDay?  @relation(fields: [chestDayId], references: [id])
+  // chestDayId  String?
+
+  // group   GroupsMuscle? @relation(fields: [groupId], references: [id])
+  // groupId String?
+  Day   Day    @relation(fields: [dayId], references: [id])
+  dayId String
+}
+
+// model ChestDay {
+//   id       String       @id
+//   category String
+//   day      Int
+//   // volTotalTraining Int
+//   // qntFaltante        Int
+//   group    GroupsMuscle @relation(fields: [groupId], references: [id])
+//   groupId  String
+
+//   training Training[]
+// }
+
+// model CardioDay {
+//   id       String       @id
+//   category String
+//   day      Int
+//   // volTotalTraining Int
+//   // qntFaltante        Int
+//   group    GroupsMuscle @relation(fields: [groupId], references: [id])
+//   groupId  String
+
+//   // training Training[]
+// }
 
 model Music {
   id          String  @id

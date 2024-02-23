@@ -13,12 +13,12 @@ function FormRegister() {
     });
 
 
-    const { clientPost } = useContext(ExampleContext)
+    const { clientPost, userPost } = useContext(ExampleContext)
 
 
     const subtmit = (formData) => {
         console.log(formData)
-        // clientPost(formData)
+        userPost(formData)
     }
 
     return (

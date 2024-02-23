@@ -43,8 +43,10 @@ export const groupsMuscles = [
     }
 ];
 
-// /////////////////////////////////////////////////////////////////////////////////////////
+// peito , cardio braço ombro perna costas
+// chest , cardio arm shoulder leg back
 
+// /////////////////////////////////////////////////////////////////////////////////////////
 
 export const peitoDays = [
     {
@@ -111,7 +113,29 @@ export const peitoDays = [
 ];
 
 // // /////////////////////////////////////////////////////////////////////////////////////////
-
+[
+	{
+		"createdAt": "22/02/2024",
+		"id": "2f290654-55c1-4c76-86d6-a478f4b504d3",
+		"category": "costas",
+		"userId": "a7b82c27-4720-44a6-9b70-fa2847177391",
+		"training": [
+			{
+				"id": "48baaffe-b804-4ab4-99b8-e46f6dfc8b5b",
+				"name": "Peito aberto",
+				"serie": 1,
+				"kg": 40,
+				"repetitions": 8,
+				"volume": 320,
+				"dayId": "2f290654-55c1-4c76-86d6-a478f4b504d3"
+			}
+		],
+		"GroupsMuscle": {
+			"id": "197a3230-f505-42a1-bf95-2e3105b812be",
+			"nome": "costas"
+		}
+	}
+]
 
 export const treino = [
     {
@@ -122,7 +146,7 @@ export const treino = [
         repeticoes: 8,
         // volume =  (VTT = (Kg * Rep) * Série)
         volume: 320,
-        treinoId: 6,
+        daysId: 6,
     },
     {
         id: 2,
@@ -132,7 +156,7 @@ export const treino = [
         repeticoes: 7,
         // volume =  (VTT = (Kg * Rep) * Série)
         volume: 280,
-        treinoId: 6,
+        daysId: 6,
     },
     {
         id: 3,
@@ -142,7 +166,7 @@ export const treino = [
         repeticoes: 6,
         // volume =  (VTT = (Kg * Rep) * Série)
         volume: 240,
-        treinoId: 6,
+        daysId: 6,
     },
 
     {
@@ -153,6 +177,6 @@ export const treino = [
         repeticoes: 0,
         // volume =  (VTT = (Kg * Rep) * Série)
         volume: 240,
-        treinoId: 1,
+        daysId: 1,
     },
 ];
