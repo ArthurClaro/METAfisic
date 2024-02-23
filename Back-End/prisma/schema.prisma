@@ -92,17 +92,7 @@ model Training {
 //   training Training[]
 // }
 
-// model CardioDay {
-//   id       String       @id
-//   category String
-//   day      Int
-//   // volTotalTraining Int
-//   // qntFaltante        Int
-//   group    GroupsMuscle @relation(fields: [groupId], references: [id])
-//   groupId  String
 
-//   // training Training[]
-// }
 
 model Music {
   id          String  @id
