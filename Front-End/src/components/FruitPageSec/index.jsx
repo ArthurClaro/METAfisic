@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { api } from "../../services/api"
 import { useForm } from "react-hook-form";
 import { formTraining } from "./formTraining";
@@ -7,12 +7,21 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import styles from './style.module.scss'
 import DateCalendarServerRequest from "./date";
 import { peitoDays, treino } from "../../data/cards";
+import { ExampleContext } from "../../providers/UserContext";
 
 
 function FruitPageSec() {
 
-    const [fruit, setFruit] = useState(null)
+    const { days, createDay, createTraining, training, userLogoutClearDay, takeDayGet } = useContext(ExampleContext)
     const { id } = useParams()
+    // console.log(days)
+    // console.log("--------------------", training)
+
+
+
+    // ////////////////////////////////////////////////////////////////////
+
+    const [fruit, setFruit] = useState(null)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -85,10 +94,10 @@ function FruitPageSec() {
     }
 
     useEffect(() => {
-            trainingList()
+        trainingList()
     }, []);
 
-    console.log(listaALL2)
+    // console.log(listaALL2)
 
 
 
@@ -106,23 +115,35 @@ function FruitPageSec() {
     }, 0)
 
     const subtmit = (formData) => {
-        console.log(formData)
-        const vol = (formData.kg * formData.repeticoes) * formData.serie
-        const addVolume = { ...formData, volume: vol }
-        settreinoLista([...treinoLista, addVolume])
-        console.log(treinoLista)
+        // console.log(formData)
 
+        let category_id = { category: id }
+        createDay(category_id)
+        createTraining(formData, String(id))
+
+        // takeDayGet( String(id))
+
+        // /////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // const vol = (formData.kg * formData.repeticoes) * formData.serie
+        // const addVolume = { ...formData, volume: vol }
+        // settreinoLista([...treinoLista, addVolume])
+        // console.log(treinoLista)
         // console.log(vttTotal)
     }
 
     // ////////////////////////////////////////////////////////////////////////////////////////
     const data = new Date().toLocaleDateString()
-    console.log(data)
+    // console.log(data)
 
     return (
         <>
             <section className='container '>
                 <h1>aaaaaaaaaaa</h1>
+                <DateCalendarServerRequest />
+                <Link to='/room'>
+                    <button className="backBtn dash" onClick={userLogoutClearDay}>Sair</button>
+                </Link>
                 <br />
 
                 <ul>
@@ -150,7 +171,7 @@ function FruitPageSec() {
 
                 <form className={styles.form} onSubmit={handleSubmit(subtmit)} >
                     <label className="text label" htmlFor="name">Nome do Treino</label>
-                    <input className="input" type="text" id="name" {...register('nome')} placeholder="Nome do Treino" />
+                    <input className="input" type="text" id="name" {...register('name')} placeholder="Nome do Treino" />
                     {errors.nome ? <p>{errors.nome.message}</p> : null}
 
                     <label className="text label" htmlFor="email">Série</label>
@@ -162,7 +183,7 @@ function FruitPageSec() {
                     {errors.kg ? <p>{errors.kg.message}</p> : null}
 
                     <label className="text label" htmlFor="confirm">Repetições</label>
-                    <input className="input" type="number" id="confirm" min="0" max="30"  {...register('repeticoes')} placeholder="Digite aqui novamente sua senha" />
+                    <input className="input" type="number" id="confirm" min="0" max="30"  {...register('repetitions')} placeholder="Digite aqui novamente sua senha" />
                     {errors.repeticoes ? <p>{errors.repeticoes.message}</p> : null}
 
                     {/* <label className="text label" htmlFor="confirm">Volume Total</label>
@@ -174,7 +195,6 @@ function FruitPageSec() {
                 </form>
 
 
-                <DateCalendarServerRequest />
             </section>
         </>
     )

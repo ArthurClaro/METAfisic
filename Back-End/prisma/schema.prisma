@@ -24,7 +24,7 @@ model User {
   password String
 
   gender    Gender   @default(Outro)
-  height    Int
+  height    Float
   weight    Int
   createdAt DateTime @default(now())
   // date somente 
@@ -55,7 +55,7 @@ model Day {
 
   createdAt String
 
-  training  Training[]
+  training Training[]
 
   GroupsMuscle GroupsMuscle @relation(fields: [category], references: [nome])
   User         User         @relation(fields: [userId], references: [id])
@@ -76,7 +76,7 @@ model Training {
 
   // group   GroupsMuscle? @relation(fields: [groupId], references: [id])
   // groupId String?
-  Day   Day    @relation(fields: [dayId], references: [id])
+  Day   Day    @relation(fields: [dayId], references: [id], onDelete: Cascade)
   dayId String
 }
 
@@ -91,8 +91,6 @@ model Training {
 
 //   training Training[]
 // }
-
-
 
 model Music {
   id          String  @id
@@ -110,3 +108,17 @@ model Music {
 // relations :::  1:N / 1:1 / N:N
 // https://vimeo.com/908253234/94de9f79c0?share=copy
 // min: 59:00
+
+// model TrainingComplete {
+//   id          String @id @default(uuid())
+//   category    String
+//   day         String
+//   name        String
+//   serie       Int
+//   kg          Int
+//   repetitions Int
+//   volume      Int
+
+//   Day   Day    @relation(fields: [dayId], references: [id])
+//   dayId String
+// }

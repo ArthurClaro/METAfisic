@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, HttpCode } from '@nestjs/common';
 import { DaysService } from './days.service';
 import { CreateDayDto } from './dto/create-day.dto';
 import { UpdateDayDto } from './dto/update-day.dto';
@@ -11,7 +11,7 @@ export class DaysController {
   @Post()
   @UseGuards(JwtAuthGuard)
   create(@Body() createDayDto: CreateDayDto, @Request() req) {
-    // console.log(req , "--------------------------")
+    // console.log(createDayDto)
     return this.daysService.create(createDayDto, req.user.id);
   }
 
@@ -32,8 +32,9 @@ export class DaysController {
     return this.daysService.update(id, updateDayDto);
   }
 
+  @HttpCode(204)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.daysService.remove(+id);
+    return this.daysService.remove(id);
   }
 }

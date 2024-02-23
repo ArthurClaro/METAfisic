@@ -9,11 +9,12 @@ function FormGo() {
 
     const { register, handleSubmit } = useForm();
 
-    const {  clientLogin } = useContext(ExampleContext)
+    const { clientLogin, userLogin } = useContext(ExampleContext)
 
     const subtmit = (formData) => {
-     
-        clientLogin(formData)
+        // console.log(formData)
+        userLogin(formData)
+        // clientLogin(formData)
     }
 
     return (

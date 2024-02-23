@@ -1,10 +1,23 @@
 import { api } from "../../services/api";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { groupsMuscles } from "../../data/cards";
+import { ExampleContext } from "../../providers/UserContext";
 
 
 function RoomSec() {
+
+    const { groups, getGroups } = useContext(ExampleContext)
+    // console.log(groups)
+    
+    // useEffect(() => {
+    //     (async () => {
+    //         await getGroups()
+    //     })()
+
+    // }, []);
+    // //////////////////////////
+
     const [loading, setLoading] = useState(false);
     const [fruitList, setFruitList] = useState([]);
 
@@ -44,8 +57,8 @@ function RoomSec() {
         loadData();
     }, []);
 
-    
-    
+
+
     const [groupM, setgroupM] = useState(groupsMuscles);
 
     return (
@@ -55,7 +68,7 @@ function RoomSec() {
 
                 <br />
 
-                <ul>
+                {/* <ul>
                     <li>
                         <button onClick={() => setCategory("")}>Todos</button>
                     </li>
@@ -84,7 +97,6 @@ function RoomSec() {
 
                 <br />
 
-
                 {loading ? (
                     <p>Carregando...</p>
                 ) : (
@@ -103,6 +115,50 @@ function RoomSec() {
                     return <li key={group.id}>
                         <Link to={`/fruit/${group.category}`}>
                             <h2>{group.category}</h2>
+                        </Link>
+
+                    </li>
+                })} */}
+
+                {/* ////////////////////////////////////////////////////////////////////////////// */}
+
+                {/* <ul >
+                    {Array.isArray(fruitList) && fruitList.length > 0 ? (
+                        fruitList.map((fruit) => (
+                            <li key={fruit.id}>
+                                <Link to={`/fruit/${fruit.id}`}>
+                                    <h2>{fruit.name}</h2>
+                                </Link>
+                            </li>
+                            // <Cards key={index} contacts={contacts} />
+                        ))
+                    ) : (
+                        <p className='text title'>Você não possui nenhum Contato</p>
+                    )}
+                </ul> */}
+
+
+                <br />
+
+                {/* {loading2 ? (
+                    <p>Carregando...</p>
+                ) : (
+                    <ul>
+                        {groups.map(group => {
+                            return <li key={group.id}>
+                                <Link to={`/fruit/${group.nome}`}>
+                                    <h2>{group.nome}</h2>
+                                </Link>
+
+                            </li>
+                        })}
+                    </ul>
+                )} */}
+
+                {groups.map(group => {
+                    return <li key={group.id}>
+                        <Link to={`/fruit/${group.nome}`}>
+                            <h2>{group.nome}</h2>
                         </Link>
 
                     </li>

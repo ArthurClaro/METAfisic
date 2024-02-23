@@ -115,24 +115,44 @@ export const peitoDays = [
 // // /////////////////////////////////////////////////////////////////////////////////////////
 [
 	{
-		"createdAt": "22/02/2024",
-		"id": "2f290654-55c1-4c76-86d6-a478f4b504d3",
+		"createdAt": "23/02/2024",
+		"id": "7c1a8a8c-843f-4ff1-8437-15b51295b3ef",
 		"category": "costas",
-		"userId": "a7b82c27-4720-44a6-9b70-fa2847177391",
+		"userId": "e1c70062-9d5d-465c-b6c1-2152373d6780",
 		"training": [
 			{
-				"id": "48baaffe-b804-4ab4-99b8-e46f6dfc8b5b",
-				"name": "Peito aberto",
-				"serie": 1,
-				"kg": 40,
-				"repetitions": 8,
-				"volume": 320,
-				"dayId": "2f290654-55c1-4c76-86d6-a478f4b504d3"
+				"id": "5f232802-271a-4491-952e-bd94a7243c6b",
+				"name": "awd",
+				"serie": 9,
+				"kg": 9,
+				"repetitions": 9,
+				"volume": 729,
+				"dayId": "7c1a8a8c-843f-4ff1-8437-15b51295b3ef"
+			},
+			{
+				"id": "ca6768bc-ca9b-48dd-a7fa-3536ee11deeb",
+				"name": "Arthur",
+				"serie": 9,
+				"kg": 9,
+				"repetitions": 9,
+				"volume": 729,
+				"dayId": "7c1a8a8c-843f-4ff1-8437-15b51295b3ef"
 			}
 		],
 		"GroupsMuscle": {
-			"id": "197a3230-f505-42a1-bf95-2e3105b812be",
+			"id": "7aa4300d-dbd1-426e-9402-bfbc0f301bed",
 			"nome": "costas"
+		}
+	},
+	{
+		"createdAt": "23/02/2024",
+		"id": "72b2d81c-7cd5-46e0-9cd5-dfe48897fe08",
+		"category": "ombro",
+		"userId": "e1c70062-9d5d-465c-b6c1-2152373d6780",
+		"training": [],
+		"GroupsMuscle": {
+			"id": "77e9e970-8a84-4e52-8159-e066283d1deb",
+			"nome": "ombro"
 		}
 	}
 ]

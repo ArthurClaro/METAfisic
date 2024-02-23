@@ -18,28 +18,35 @@ export class DaysService {
     const user = Object.assign(new User(), createDayDto)
 
     const foundDay = await this.prisma.day.findMany({ where: { createdAt: timestamp } })
+    // const foundDay = await this.prisma.day.findMany({ where: { createdAt: "24/02/2024" } })
     const foundCategory = await this.prisma.day.findMany({ where: { category: day.category } })
-    const foundCategoryExists = await this.prisma.day.findMany({ where: { category: day.category } })
+    const foundCategoryExists = await this.prisma.groupsMuscle.findUnique({ where: { nome: day.category } })
+    // console.log(foundDay, "-----------", foundCategory)
 
-    if (foundCategoryExists.length == 0) {
+    const foundCategory2 = foundDay.filter((element) => element.category == day.category)
+    // console.log(foundCategory2)
+
+
+    if (!foundCategoryExists) {
       throw new NotFoundException("Category not exists")
     }
 
-    if (foundDay.length >= 1 && foundCategory.length >= 1) {
-      throw new ConflictException("Day already exists or Category already exists")
+    if (foundCategory2.length) {
+      throw new ConflictException("Day already exists in Category ")
     }
 
     // console.log("aaaaaaaaaaaaaaa", userId, "aaaaaaaaaa")
     const fff = await this.prisma.user.findUnique({ where: { id: userId } })
     if (!fff) {
-      throw new NotFoundException("User does not exists")
+      throw new NotFoundException("User or token not exist")
     }
 
     const newMusic = await this.prisma.day.create({
       data: {
         id: day.id,
         category: day.category,
-        createdAt: timestamp + 2,
+        // createdAt: "24/02/2024",
+        createdAt: timestamp,
         userId
       }
     })
@@ -74,7 +81,15 @@ export class DaysService {
   //   return `This action updates a #${id} day`;
   // }
 
-  remove(id: number) {
-    return `This action removes a #${id} day`;
+  async remove(id: string) {
+    const user = await this.prisma.day.findUnique({ where: { id } })
+    if (!user) {
+      throw new NotFoundException("User does not exists")
+    }
+    await this.prisma.day.delete({ where: { id } })
   }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} day`;
+  // }
 }

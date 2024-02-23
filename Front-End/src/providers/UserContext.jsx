@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../services/api";
 import { useOutclick } from "../hooks/useOutclick";
 import { useKeydown } from "../hooks/useKeydown";
@@ -58,6 +58,7 @@ export const ExampleProvider = ({ children }) => {
 
 
     const userLogout = () => {
+        // localStorage.removeItem()
         localStorage.clear()
         setUser(null)
         navigate('/')
@@ -205,8 +206,149 @@ export const ExampleProvider = ({ children }) => {
         }
     }
 
+    const userLogin = async (formData) => {
+        try {
+            const { data } = await api.post('/login', formData);
+            localStorage.setItem('@TOKEN', data.token)
+            localStorage.setItem('@EMAIL', JSON.stringify(formData.email))
+
+            toastSuccess('Redirecionando para Room !', 2000)
+            setTimeout(() => {
+                navigate('/room')
+            }, 2000);
+            console.log(data)
+        } catch (error) {
+            console.log(error.message)
+            toastErro('Senha ou e-mail incorretos !', 3000)
+        }
+    }
+
+    // useEffect(() => {
+    //     const loadUser = async () => {
+    //         const localToken = localStorage.getItem("@TOKEN")
+
+    //         if (localToken) {
+    //             toastSuccess("Usuário já logado .", 2000)
+    //             navigate("/room")
+    //         } else {
+    //             navigate("/")
+    //             toastErro("Usuário não logado .", 2000)
+    //         }
+    //     }
+    //     loadUser()
+    //     // getUser()
+    // }, [])
+
+    const [groups, setgroups] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            await getGroups()
+        })()
+
+    }, []);
+
+    const getGroups = async () => {
+        try {
+
+            const { data } = await api.get('/groups-muscles');
+
+            setgroups(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+    const [days, setdays] = useState([]);
+
+
+    const createDay = async (formData) => {
+        // console.log(formData)
+        try {
+            const token = localStorage.getItem('@TOKEN')
+            const { data } = await api.post(`/days`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            localStorage.setItem('@DAYTOKEN', data.id)
+
+            toastSuccess('Td certo DAY !', 2000)
+            setdays(data)
+        } catch (error) {
+            // console.log(error.message)
+            // toastErro('da no mesmo  !', 3000)
+        }
+    }
+
+    const [training, settraining] = useState([]);
+
+    const createTraining = async (formData, id) => {
+        // console.log("----------", formData, typeof id)
+        try {
+            try {
+                const { data } = await api.get(`/days/${id}`);
+
+                const trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
+                trainingInDay.forEach(element => {
+                    localStorage.setItem('@DAYTOKEN', element.id)
+                });
+                toastSuccess('deu certo !', 2000)
+
+            } catch (error) {
+                console.log(error.message)
+                toastErro('Category don`t exist  !', 3000)
+            }
+            const token = localStorage.getItem('@TOKEN')
+            const dayIdToken = localStorage.getItem('@DAYTOKEN')
+
+            const { data } = await api.post(`/training/${dayIdToken}`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+
+            toastSuccess('treino cirado!', 2000)
+            // console.log(data)
+            settraining(data)
+        } catch (error) {
+            console.log(error.message)
+            toastErro('erroo treino  !', 3000)
+        }
+    }
+
+
+
+    const takeDayGet = async (id) => {
+
+        try {
+            const { data } = await api.get(`/days/${id}`);
+            console.log(data)
+            // data.forEach(element => {
+            // console.log(element)
+            // });
+            toastSuccess('deu certo !', 2000)
+
+        } catch (error) {
+            console.log(error.message)
+            toastErro('Category don`t exist  !', 3000)
+        }
+
+    }
+
+
+
+
+
+
+
+    const userLogoutClearDay = () => {
+        localStorage.removeItem('@DAYTOKEN')
+    }
+
     return (
-        <ExampleContext.Provider value={{userPost, delClient, clientLogin, editingClient, seteditingClient, pacthClients, setIsOpenClient, isOpenClient, getUser, userClient, clientPost, toastSuccess, toastErro, setLista, user, userLogout, isOpen, setIsOpen, modalRef, buttonRef, isOpen2, setIsOpen2, setUser, lista }}>
+        <ExampleContext.Provider value={{ takeDayGet, userLogoutClearDay, createTraining, training, days, createDay, groups, userLogin, userPost, delClient, clientLogin, editingClient, seteditingClient, pacthClients, setIsOpenClient, isOpenClient, getUser, userClient, clientPost, toastSuccess, toastErro, setLista, user, userLogout, isOpen, setIsOpen, modalRef, buttonRef, isOpen2, setIsOpen2, setUser, lista }}>
             {children}
         </ExampleContext.Provider>
     )

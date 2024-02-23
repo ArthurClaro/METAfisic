@@ -8,7 +8,7 @@ export const api = axios.create({
     // baseURL: 'http://localhost:5173/',
     //  <--- Rodar local : PORT : 3000
     
-    // https://metafisic.onrender.com/
+    // baseURL: 'https://metafisic.onrender.com/',
 
     timeout: 10000,
 })
