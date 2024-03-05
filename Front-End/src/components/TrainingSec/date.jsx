@@ -31,12 +31,13 @@ function fakeFetch(date, { signal }) {
         };
     });
 }
-
-const initialValue = dayjs('2022-04-17');
+// const initialValue = dayjs('2022-04-17');
+const initialValue = dayjs(new Date());
 
 function ServerDay(props) {
     const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
-
+    // day = '2024-02-28'
+    // console.log('2024-02-20')
     const isSelected =
         !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
 
@@ -45,7 +46,7 @@ function ServerDay(props) {
             key={props.day.toString()}
             overlap="circular"
             badgeContent={isSelected ? '🦾' : undefined}
-            // 💪🦾🌚
+        // 💪🦾🌚
         >
             <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
         </Badge>
@@ -98,16 +99,22 @@ export default function DateCalendarServerRequest() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
                 defaultValue={initialValue}
+            
                 loading={isLoading}
                 onMonthChange={handleMonthChange}
                 renderLoading={() => <DayCalendarSkeleton />}
                 slots={{
                     day: ServerDay,
+                    // day: ('2024-02-29'),
+
+                    // dayjs('2022-04-17')
+                    
                 }}
                 slotProps={{
                     day: {
                         highlightedDays,
                     },
+                    
                 }}
             />
         </LocalizationProvider>

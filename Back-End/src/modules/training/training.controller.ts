@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, Response } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, Response, HttpCode } from '@nestjs/common';
 import { TrainingService } from './training.service';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
@@ -26,7 +26,7 @@ export class TrainingController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.trainingService.findOne(+id);
+    return this.trainingService.findOne(id);
   }
 
   @Patch(':id')
@@ -34,8 +34,9 @@ export class TrainingController {
     return this.trainingService.update(id, updateTrainingDto);
   }
 
+  @HttpCode(204)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.trainingService.remove(+id);
+    return this.trainingService.remove(id);
   }
 }

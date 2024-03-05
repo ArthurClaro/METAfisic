@@ -39,3 +39,30 @@
         padding: 10px 10px;
     }
 }
+
+.divCalendar {
+    background-color: aqua;
+    height: 432px;
+    width: 331px;
+    // @apply card flex justify-content-center
+    // @extend  .card 
+
+
+    // &>span {
+    //     // width: 100%;
+    // }
+
+    
+    // &>.calendar {
+    //     width: 100%;
+    // }
+}
+
+.calendar {
+    //   width: 100%;
+
+    // background-color: red;
+    // &>.p-datepicker.p-component.p-datepicker-inline .p-ripple-disabled {
+    //     background-color: red;
+    // }
+}

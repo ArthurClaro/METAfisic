@@ -4,6 +4,7 @@ import { api } from "../services/api";
 import { useOutclick } from "../hooks/useOutclick";
 import { useKeydown } from "../hooks/useKeydown";
 import { toast } from "react-toastify";
+import { boolean } from "zod";
 
 export const ExampleContext = createContext({})
 
@@ -215,6 +216,7 @@ export const ExampleProvider = ({ children }) => {
             toastSuccess('Redirecionando para Room !', 2000)
             setTimeout(() => {
                 navigate('/room')
+                getGroups()
             }, 2000);
             console.log(data)
         } catch (error) {
@@ -278,14 +280,14 @@ export const ExampleProvider = ({ children }) => {
             setdays(data)
         } catch (error) {
             // console.log(error.message)
-            // toastErro('da no mesmo  !', 3000)
+            toastErro('Token  não encontrado  !!!!!!!!!!', 3000)
         }
     }
 
     const [training, settraining] = useState([]);
 
     const createTraining = async (formData, id) => {
-        // console.log("----------", formData, typeof id)
+        // console.log("----------", formData, id)
         try {
             try {
                 const { data } = await api.get(`/days/${id}`);
@@ -294,7 +296,7 @@ export const ExampleProvider = ({ children }) => {
                 trainingInDay.forEach(element => {
                     localStorage.setItem('@DAYTOKEN', element.id)
                 });
-                toastSuccess('deu certo !', 2000)
+                toastSuccess('deu certo createTraining!', 2000)
 
             } catch (error) {
                 console.log(error.message)
@@ -308,10 +310,12 @@ export const ExampleProvider = ({ children }) => {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-
+            takeDayGet(id)
+            // takeTrainingCategoryDay()
             toastSuccess('treino cirado!', 2000)
             // console.log(data)
             settraining(data)
+            takeTrainingCategoryDay()
         } catch (error) {
             console.log(error.message)
             toastErro('erroo treino  !', 3000)
@@ -319,16 +323,59 @@ export const ExampleProvider = ({ children }) => {
     }
 
 
+    // const [daysVtt, setdaysVtt] = useState([]);
+
+    // const [trainingAll, settrainingAll] = useState([]);
+    // const [daysAll, setdaysAll] = useState([]);
+    // // console.log(daysAll)
+    // let datas = []
+    // let datasFormatadas = []
+
+    // daysAll.forEach(element => {
+    //     // console.log(element.training)
+
+    //     const somaTotalBudget = element.training.reduce((prev, current) => {
+    //         return prev + current.volume
+    //     }, 0)
+    //     // console.log(somaTotalBudget)
+    //     const currentElement = { ...element };
+    //     currentElement.Vtt = somaTotalBudget
+    //     // console.log(currentElement)
+    //     // setdaysVtt(currentElement)
+
+    //     datas.push(element.createdAt)
+    // });
+
+
+
+
+    const [daysAll, setdaysAll] = useState([]);
+
+    const [trainingAll, settrainingAll] = useState([]);
 
     const takeDayGet = async (id) => {
 
         try {
             const { data } = await api.get(`/days/${id}`);
-            console.log(data)
-            // data.forEach(element => {
-            // console.log(element)
-            // });
-            toastSuccess('deu certo !', 2000)
+            //  == DIAS 
+            // console.log(data)
+            const days = data.map(({ createdAt }) => ({ createdAt }))
+            // console.log(days)
+            // setdaysAll(days)
+            setdaysAll(data)
+
+
+            let trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
+            trainingInDay.forEach(element => {
+                // console.log(element)
+                localStorage.setItem('@DAYTOKEN', element.id)
+
+                // console.log(element.training)
+                settrainingAll(element.training)
+            });
+
+            calculateVtt();
+            toastSuccess('deu certo takeDayGet!', 8000)
 
         } catch (error) {
             console.log(error.message)
@@ -336,6 +383,262 @@ export const ExampleProvider = ({ children }) => {
         }
 
     }
+
+
+
+    const [daysVtt, setdaysVtt] = useState([]);
+
+    const [diaAtual, setdiaAtual] = useState({});
+
+    const calculateVtt = () => {
+        const sortedDaysAll = [...daysAll].sort((a, b) => {
+            const dateA = new Date(a.createdAt.split('/').reverse().join('/'));
+            const dateB = new Date(b.createdAt.split('/').reverse().join('/'));
+            return dateA - dateB;
+        });
+
+        let previousVtt = 0;
+        // console.log(sortedDaysAll)
+        const newDaysVtt = sortedDaysAll.map(element => {
+            const somaTotalBudget = element.training.reduce((prev, current) => {
+                return prev + current.volume;
+            }, 0);
+
+            if (previousVtt > 0 && previousVtt > somaTotalBudget) {
+                return {
+                    ...element,
+                    Vtt: somaTotalBudget,
+                    BateuMeta: false,
+                    Faltante: previousVtt - somaTotalBudget
+                };
+            }
+            previousVtt = somaTotalBudget;
+
+            return {
+                ...element,
+                Vtt: somaTotalBudget,
+                BateuMeta: true
+            };
+        });
+        // console.log(newDaysVtt)
+        setdaysVtt(newDaysVtt);
+        // console.log(daysVtt)
+    };
+
+
+    useEffect(() => {
+        // console.log("daysVtt changed. Updating diaAtual...");
+        const diaAtual2 = daysVtt.find(element => element.createdAt === new Date().toLocaleDateString());
+        // console.log(diaAtual2.Vtt)
+        setdiaAtual(diaAtual2);
+    }, [daysVtt]);
+
+
+    useEffect(() => {
+        // console.log("daysAll changed. Recalculating Vtt...");
+        calculateVtt();
+    }, [daysAll]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    let datas = [];
+    // datas = daysAll.map(element => element.createdAt);
+    datas = daysVtt.map(element => element.createdAt);
+    // daysAll == daysVtt(tem mais coisa, Vtt, BateuMeta)
+
+    // //////////
+
+    // console.log(daysVtt)
+    // console.log(daysAll)
+    // console.log(datas)
+
+
+
+    datas.sort()
+    // console.log(datas)
+    let datasFormatadas = [];
+
+    datas.forEach((data, index) => {
+        const metaB = daysVtt.find(e => e.createdAt == data)
+        // console.log(metaB)
+
+        let [dia, mes, ano] = data.split('/');
+
+        let dataFormatada = {
+            day: parseInt(dia),
+            month: parseInt(mes),
+            year: parseInt(ano),
+            meta: metaB.BateuMeta
+        };
+
+
+        if (index == 0) {
+            dataFormatada.type = "initialDay";
+        } else if (index == datas.length - 1) {
+            dataFormatada.type = "endDay";
+        } else {
+            dataFormatada.type = "otherDay";
+        }
+
+        datasFormatadas.push(dataFormatada);
+
+    });
+    // console.log(datasFormatadas)
+
+
+
+    const [date, setDate] = useState(null);
+    // console.log(date)
+    const dateTemplate = (date) => {
+
+        let result = date.day;
+        datasFormatadas.forEach((element) => {
+            const currentDate = { ...date };
+            currentDate.month += 1;
+            if ((element.type === "initialDay" || element.type === "endDay" || element.type === "otherDay")
+                && element.day === currentDate.day
+                && element.month === currentDate.month
+                && element.year === currentDate.year) {
+                result = (
+                    <strong style={{ color: 'blue' }}>{date.day}</strong>
+                );
+            }
+            if ((element.type === "initialDay" || element.type === "endDay" || element.type === "otherDay")
+                && element.day === currentDate.day
+                && element.month === currentDate.month
+                && element.year === currentDate.year
+                && element.meta == false) {
+                result = (
+                    <strong style={{ color: 'red' }}>{date.day}</strong>
+                );
+            }
+        });
+        return result;
+
+    }
+
+
+
+
+    const [treinosDoDia, settreinosDoDia] = useState([]);
+
+    const takeTrainingCategoryDay = async () => {
+
+        try {
+            const dayIdToken = localStorage.getItem('@DAYTOKEN')
+            // console.log(dayIdToken)
+
+            const { data } = await api.get(`/training/${dayIdToken}`);
+            // console.log(data)
+
+            // calculateVtt()
+            settreinosDoDia(data)
+            toastSuccess('deu certo takeTrainingCategoryDay!', 8000)
+
+        } catch (error) {
+            console.log(error.message)
+            toastErro('Training don`t exist  !', 3000)
+        }
+
+    }
+    // useEffect(() => {
+    //     (async () => {
+    //         await takeTrainingCategoryDay()
+    //     })()
+
+    // }, []);
+
+    // console.log(treinosDoDia)
+
+
+
+
+
+
+    // /////////////// PATCH
+    const [isOpenTrainingFill, setisOpenTrainingFill] = useState(false)
+
+    const [editingTraining, seteditingTraining] = useState(null)
+
+    // console.log(editingTraining)
+
+
+    const patchTrainingDay = async (formData) => {
+
+        try {
+            const trainingId = localStorage.getItem('@ID_TRAINING')
+            const token = localStorage.getItem('@TOKEN')
+
+            const { data } = await api.patch(`/training/${trainingId}`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            // console.log(data)
+
+
+            calculateVtt()
+            takeTrainingCategoryDay()
+            // takeDayGet()
+            toastSuccess('treino atualizado!', 8000)
+        } catch (error) {
+            console.log(error.message)
+            toastErro('Training don`t exist  !', 3000)
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -348,7 +651,7 @@ export const ExampleProvider = ({ children }) => {
     }
 
     return (
-        <ExampleContext.Provider value={{ takeDayGet, userLogoutClearDay, createTraining, training, days, createDay, groups, userLogin, userPost, delClient, clientLogin, editingClient, seteditingClient, pacthClients, setIsOpenClient, isOpenClient, getUser, userClient, clientPost, toastSuccess, toastErro, setLista, user, userLogout, isOpen, setIsOpen, modalRef, buttonRef, isOpen2, setIsOpen2, setUser, lista }}>
+        <ExampleContext.Provider value={{ diaAtual, takeTrainingCategoryDay, calculateVtt, patchTrainingDay, editingTraining, seteditingTraining, isOpenTrainingFill, setisOpenTrainingFill, takeTrainingCategoryDay, treinosDoDia, daysVtt, dateTemplate, date, setDate, daysAll, trainingAll, takeDayGet, userLogoutClearDay, createTraining, training, days, createDay, groups, userLogin, userPost, delClient, clientLogin, editingClient, seteditingClient, pacthClients, setIsOpenClient, isOpenClient, getUser, userClient, clientPost, toastSuccess, toastErro, setLista, user, userLogout, isOpen, setIsOpen, modalRef, buttonRef, isOpen2, setIsOpen2, setUser, lista }}>
             {children}
         </ExampleContext.Provider>
     )

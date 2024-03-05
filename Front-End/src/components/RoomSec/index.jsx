@@ -18,48 +18,48 @@ function RoomSec() {
     // }, []);
     // //////////////////////////
 
-    const [loading, setLoading] = useState(false);
-    const [fruitList, setFruitList] = useState([]);
+    // const [loading, setLoading] = useState(false);
+    // const [fruitList, setFruitList] = useState([]);
 
-    const [category, setCategory] = useState("");
+    // const [category, setCategory] = useState("");
 
-    useEffect(() => {
-        const getFruits = async () => {
-            try {
-                setLoading(true);
-                const { data } = await api.get("fruits", {
-                    params: {
-                        category: category !== "" ? category : undefined,
-                    },
-                });
-                setFruitList(data);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        getFruits();
-    }, [category]);
+    // useEffect(() => {
+    //     const getFruits = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const { data } = await api.get("fruits", {
+    //                 params: {
+    //                     category: category !== "" ? category : undefined,
+    //                 },
+    //             });
+    //             setFruitList(data);
+    //         } catch (error) {
+    //             console.log(error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+    //     getFruits();
+    // }, [category]);
 
-    useEffect(() => {
-        const loadData = async () => {
-            try {
-                setLoading(true);
-                const { data } = await api.get("/fruits");
-                setFruitList(data);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadData();
-    }, []);
+    // useEffect(() => {
+    //     const loadData = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const { data } = await api.get("/fruits");
+    //             setFruitList(data);
+    //         } catch (error) {
+    //             console.log(error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+    //     loadData();
+    // }, []);
 
 
 
-    const [groupM, setgroupM] = useState(groupsMuscles);
+    // const [groupM, setgroupM] = useState(groupsMuscles);
 
     return (
         <>
@@ -157,7 +157,7 @@ function RoomSec() {
 
                 {groups.map(group => {
                     return <li key={group.id}>
-                        <Link to={`/fruit/${group.nome}`}>
+                        <Link to={`/room/${group.nome}`}>
                             <h2>{group.nome}</h2>
                         </Link>
 

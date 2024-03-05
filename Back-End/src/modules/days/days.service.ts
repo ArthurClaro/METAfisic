@@ -18,7 +18,7 @@ export class DaysService {
     const user = Object.assign(new User(), createDayDto)
 
     const foundDay = await this.prisma.day.findMany({ where: { createdAt: timestamp } })
-    // const foundDay = await this.prisma.day.findMany({ where: { createdAt: "24/02/2024" } })
+    // const foundDay = await this.prisma.day.findMany({ where: { createdAt: "28/02/2024" } })
     const foundCategory = await this.prisma.day.findMany({ where: { category: day.category } })
     const foundCategoryExists = await this.prisma.groupsMuscle.findUnique({ where: { nome: day.category } })
     // console.log(foundDay, "-----------", foundCategory)
@@ -45,7 +45,7 @@ export class DaysService {
       data: {
         id: day.id,
         category: day.category,
-        // createdAt: "24/02/2024",
+        // createdAt: "28/02/2024",
         createdAt: timestamp,
         userId
       }

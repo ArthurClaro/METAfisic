@@ -42,16 +42,28 @@ export class TrainingService {
     return plainToInstance(Training, train)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} training`;
+  async findOne(id: string) {
+    const day = await this.prisma.training.findMany({ where: { dayId: id } })
+    // const day = await this.prisma.training.findMany({ where: { dayId: id }, include: { Day: true } })
+    if (!day) {
+      throw new NotFoundException("Training does not exists")
+    }
+    return plainToInstance(Training, day)
   }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} training`;
+  // }
 
   async update(id: string, updateTrainingDto: UpdateTrainingDto): Promise<Training> {
     const user = await this.prisma.training.findUnique({ where: { id } })
     if (!user) {
       throw new NotFoundException("Day does not exists")
     }
-    const updatedUser = await this.prisma.training.update({ where: { id }, data: { ...updateTrainingDto } })
+    const training = Object.assign(new Training(), updateTrainingDto)
+
+    const vtt = Number((training.kg * training.repetitions) * training.serie)
+
+    const updatedUser = await this.prisma.training.update({ where: { id }, data: { ...updateTrainingDto, volume: vtt } })
     return plainToInstance(Training, updatedUser)
   }
 
@@ -59,7 +71,15 @@ export class TrainingService {
   //   return `This action updates a #${id} training`;
   // }
 
-  remove(id: number) {
-    return `This action removes a #${id} training`;
+  async remove(id: string) {
+    const user = await this.prisma.training.findUnique({ where: { id } })
+    if (!user) {
+      throw new NotFoundException("Training does not exists")
+    }
+    await this.prisma.training.delete({ where: { id } })
   }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} training`;
+  // }
 }
