@@ -35,7 +35,6 @@ export class DaysService {
       throw new ConflictException("Day already exists in Category ")
     }
 
-    // console.log("aaaaaaaaaaaaaaa", userId, "aaaaaaaaaa")
     const fff = await this.prisma.user.findUnique({ where: { id: userId } })
     if (!fff) {
       throw new NotFoundException("User or token not exist")
