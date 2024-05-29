@@ -23,6 +23,7 @@ export class TrainingService {
     const vtt = Number((training.kg * training.repetitions) * training.serie)
     const newArr = await this.prisma.training.create({
       data: {
+
         id: training.id,
         name: training.name,
         serie: training.serie,
@@ -48,11 +49,17 @@ export class TrainingService {
     if (!day) {
       throw new NotFoundException("Training does not exists")
     }
+    // const total = day.reduce((prev, current) => {
+    //   return prev + current.volume;
+    // }, 0);
+
+
+    // return plainToInstance(Training, { day, TotalVol: total })
     return plainToInstance(Training, day)
   }
-  // findOne(id: number) {
-  //   return `This action returns a #${id} training`;
-  // }
+
+
+
 
   async update(id: string, updateTrainingDto: UpdateTrainingDto): Promise<Training> {
     const user = await this.prisma.training.findUnique({ where: { id } })

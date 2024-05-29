@@ -1,0 +1,19 @@
+autenticar rotas 
+dockeficar
+estilizar  
+refatorar 
+
+
+calcular Peso/ room/perna dpss: 
+https://ui.shadcn.com/docs/components/drawer
+
+
+fazer USERS patch/del/findOne(Insomnia) 
+aparecer modal lado Esquerdo pra config User dps 
+- dividir os Contexts
+
+Terminar Sugerir Treinos
+
+tsconfig.json ERRO /pergunta
+
+--prod !IMPORTANT !! subir github antes claro

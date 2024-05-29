@@ -1,30 +1,26 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { useOutclick } from "../hooks/useOutclick";
 import { useKeydown } from "../hooks/useKeydown";
 import { toast } from "react-toastify";
-import { boolean } from "zod";
+
+import costasImage from '../assets/groupsM/costas.png';
+import pernaImage from '../assets/groupsM/perna.png';
+import peitoImage from '../assets/groupsM/peito.png';
+import cardioImage from '../assets/groupsM/cardio.png';
+import bracoImage from '../assets/groupsM/braço.png';
+
 
 export const ExampleContext = createContext({})
 
 export const ExampleProvider = ({ children }) => {
 
-    const [user, setUser] = useState(null)
-
-    const [isOpen, setIsOpen] = useState(false)
-
-    const [isOpenClient, setIsOpenClient] = useState(false)
-
-    const [editingClient, seteditingClient] = useState(null)
-
     const navigate = useNavigate();
-
-    const [lista, setLista] = useState([])
-
 
     function toastSuccess(message, time) {
         toast.success(message, {
+            toastId: 'succes1',
             position: "top-right",
             autoClose: time,
             hideProgressBar: false,
@@ -34,13 +30,14 @@ export const ExampleProvider = ({ children }) => {
             progress: undefined,
             theme: "light",
             style: {
-                background: '#343B41',
+                background: 'black',
                 color: '#F8F9FA'
             }
         });
     }
     function toastErro(message, time) {
         toast.error(message, {
+            toastId: 'erro1',
             position: "top-right",
             autoClose: time,
             hideProgressBar: false,
@@ -50,196 +47,83 @@ export const ExampleProvider = ({ children }) => {
             progress: undefined,
             theme: "light",
             style: {
-                background: '#343B41',
+                background: 'black',
                 color: '#F8F9FA'
             }
         });
     }
 
-
-
-    const userLogout = () => {
-        // localStorage.removeItem()
-        localStorage.clear()
-        setUser(null)
-        navigate('/')
-    }
-
-
-    // useEffect(() => {
-    //     const loadUser = async () => {
-    //         const localToken = localStorage.getItem("@TOKEN")
-
-    //         if (localToken) {
-    //             toastSuccess("Usuário já logado .", 2000)
-    //             navigate("/dash")
-    //         } else {
-    //             navigate("/")
-    //             toastErro("Usuário não logado .", 2000)
-    //         }
-    //     }
-    //     loadUser()
-    //     getUser()
-    // }, [])
+    const [isOpen2, setIsOpen2] = useState(false)
 
     const modalRef = useOutclick(() => {
-        setIsOpen(false);
         setIsOpen2(false);
+        setisOpenTrainingFill(false)
     })
 
     const buttonRef = useKeydown('Escape', (element) => {
         element.click()
     })
 
-    const [isOpen2, setIsOpen2] = useState(false)
-
-
-    const clientPost = async (formData) => {
-        try {
-            const { data } = await api.post('/clients', formData);
-            toastSuccess('Redirecionando para página de login.', 2000)
-            setTimeout(() => {
-                navigate('/')
-            }, 2000);
-
-        } catch (error) {
-            console.log(error.message)
-            toastErro('E-mail já cadastrado !', 3000)
-        }
-    }
-
-    const clientLogin = async (formData) => {
-        try {
-            const { data } = await api.post('/login', formData);
-            localStorage.setItem('@TOKEN', data.token)
-            localStorage.setItem('@EMAIL', JSON.stringify(formData.email))
-
-            toastSuccess('Redirecionando para Dashboard!', 2000)
-            setTimeout(() => {
-                navigate('/dash')
-            }, 2000);
-
-        } catch (error) {
-            console.log(error.message)
-            toastErro('Senha ou e-mail incorretos !', 3000)
-        }
-    }
-
-    const [userClient, setUserClient] = useState({});
-
-    useEffect(() => {
-        (async () => {
-            await getUser()
-        })()
-
-    }, []);
-    const getUser = async () => {
-        try {
-            const token = localStorage.getItem('@TOKEN')
-
-            const { data } = await api.get('/clients', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            localStorage.setItem('@IDUSER', JSON.stringify(data.id))
-
-            setUserClient(data);
-            seteditingClient(data)
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const pacthClients = async (formData) => {
-        const token = localStorage.getItem('@TOKEN')
-        const idUser = localStorage.getItem('@IDUSER')
-        try {
-            const { data } = await api.patch(`/clients/${idUser}`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            toastSuccess('Usuário atualizado !', 2000)
-            getUser()
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const delClient = async (formData) => {
-        const token = localStorage.getItem('@TOKEN')
-
-        try {
-            const { data } = await api.delete(`/clients/${formData}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            toastSuccess('Usuário Deletado !', 2000)
-            setTimeout(() => {
-                navigate('/')
-            }, 2000);
-
-            await getUser()
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const [visibleModal, setVisibleModal] = useState(false);
 
 
     // ///////////////////////////////////////////////////////////////////
 
+
+    const checkboxArrow = useRef(null)
+
+    const clickInSingUp = (trueOrF, time) => {
+        localStorage.clear()
+        setTimeout(() => {
+            if (checkboxArrow.current) {
+                checkboxArrow.current.checked = trueOrF;
+            }
+        }, time);
+    }
+
+    const clickGoOut = () => {
+        localStorage.clear()
+        setuserMETA([])
+        toastSuccess('Usuário META deslogado.', 2000)
+        window.location.href = '#sec1'
+    }
+    
+    // ///////////////////////////////////////////////////////////////////
+
+
+
     const userPost = async (formData) => {
         try {
             const { data } = await api.post('/users', formData);
-            toastSuccess('Redirecionando para página de login.', 2000)
+            toastSuccess('Usuário META criado.', 3000)
             setTimeout(() => {
-                navigate('/')
+                clickInSingUp(false)
             }, 2000);
-
-            console.log(data)
-
         } catch (error) {
-            console.log(error.message)
+            // console.log(error.message)
             toastErro('E-mail já cadastrado !', 3000)
         }
     }
 
-    const userLogin = async (formData) => {
+    const [userMETA, setuserMETA] = useState([]);
+
+    const userGet = async () => {
         try {
-            const { data } = await api.post('/login', formData);
-            localStorage.setItem('@TOKEN', data.token)
-            localStorage.setItem('@EMAIL', JSON.stringify(formData.email))
+            const token = localStorage.getItem('@TOKEN')
+            const emailUnique = localStorage.getItem('@EMAIL')
+            const { data } = await api.get('/users', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            const arrayUnique = data.find(element => element.email === emailUnique);
 
-            toastSuccess('Redirecionando para Room !', 2000)
-            setTimeout(() => {
-                navigate('/room')
-                getGroups()
-            }, 2000);
-            console.log(data)
+            setuserMETA([{ ...arrayUnique }])
+            // [{...}]
         } catch (error) {
-            console.log(error.message)
-            toastErro('Senha ou e-mail incorretos !', 3000)
+            // console.log(error);
         }
-    }
-
-    // useEffect(() => {
-    //     const loadUser = async () => {
-    //         const localToken = localStorage.getItem("@TOKEN")
-
-    //         if (localToken) {
-    //             toastSuccess("Usuário já logado .", 2000)
-    //             navigate("/room")
-    //         } else {
-    //             navigate("/")
-    //             toastErro("Usuário não logado .", 2000)
-    //         }
-    //     }
-    //     loadUser()
-    //     // getUser()
-    // }, [])
+    };
 
     const [groups, setgroups] = useState([]);
 
@@ -247,26 +131,115 @@ export const ExampleProvider = ({ children }) => {
         (async () => {
             await getGroups()
         })()
-
     }, []);
 
     const getGroups = async () => {
         try {
-
             const { data } = await api.get('/groups-muscles');
+            const groupsWithImages = data.map(group => {
+                let imageURL;
+                switch (group.nome) {
+                    case 'costas':
+                        imageURL = costasImage;
+                        break;
+                    case 'perna':
+                        imageURL = pernaImage;
+                        break;
+                    case 'peito':
+                        imageURL = peitoImage;
+                        break;
+                    case 'cardio':
+                        imageURL = cardioImage;
+                        break;
+                    case 'braço':
+                        imageURL = bracoImage;
+                        break;
+                    default:
+                        imageURL = null;
+                }
+                return { ...group, imageURL };
+            });
 
-            setgroups(data);
+            setgroups(groupsWithImages);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
+    const userLogin = async (formData) => {
+        try {
+            const { data } = await api.post('/login', formData);
+            localStorage.setItem('@TOKEN', data.token)
+            localStorage.setItem('@EMAIL', formData.email)
+
+            toastSuccess('Redirecionando para Home.', 2500)
+            setTimeout(() => {
+                navigate('/')
+                setVisibleModal(false)
+                getGroups()
+                userGet()
+                setTimeout(() => {
+                    setVisibleModal(true)
+                }, 2300);
+            }, 2000);
+        } catch (error) {
+            // console.log(error.message)
+            toastErro('Senha ou e-mail incorretos !', 3000)
+        }
+    }
+
+    const loadUser = async () => {
+        const localToken = localStorage.getItem("@TOKEN");
+        const categoyParam = localStorage.getItem("@CATEGORYPARAM");
+
+        if (localToken) {
+            userGet()
+            if (groups && categoyParam) {
+                const lista = groups.find(element => element.nome === categoyParam);
+                if (lista !== undefined) {
+                    navigate(`/groups/${categoyParam}`);
+                } else {
+                    toastSuccess("Usuário já logado.", 2000);
+                    navigate(`/`);
+                }
+            } else {
+                navigate(`/`);
+            }
+        } else {
+            setuserMETA([])
+            setTimeout(() => {
+                setIsOpen2(true)
+            }, 2500);
+        }
+    };
+
+    useEffect(() => {
+        if (groups) {
+            loadUser();
+        }
+    }, [groups]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // /////////////////////////////////////////////////
 
     const [days, setdays] = useState([]);
 
-
     const createDay = async (formData) => {
-        // console.log(formData)
         try {
             const token = localStorage.getItem('@TOKEN')
             const { data } = await api.post(`/days`, formData, {
@@ -276,11 +249,10 @@ export const ExampleProvider = ({ children }) => {
             });
             localStorage.setItem('@DAYTOKEN', data.id)
 
-            toastSuccess('Td certo DAY !', 2000)
+            toastSuccess('Dia para treino criado !', 5000)
             setdays(data)
         } catch (error) {
             // console.log(error.message)
-            toastErro('Token  não encontrado  !!!!!!!!!!', 3000)
         }
     }
 
@@ -291,17 +263,15 @@ export const ExampleProvider = ({ children }) => {
         try {
             try {
                 const { data } = await api.get(`/days/${id}`);
-
                 const trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
                 trainingInDay.forEach(element => {
                     localStorage.setItem('@DAYTOKEN', element.id)
                 });
-                toastSuccess('deu certo createTraining!', 2000)
 
             } catch (error) {
                 console.log(error.message)
-                toastErro('Category don`t exist  !', 3000)
             }
+
             const token = localStorage.getItem('@TOKEN')
             const dayIdToken = localStorage.getItem('@DAYTOKEN')
 
@@ -310,274 +280,98 @@ export const ExampleProvider = ({ children }) => {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            takeDayGet(id)
-            // takeTrainingCategoryDay()
-            toastSuccess('treino cirado!', 2000)
-            // console.log(data)
             settraining(data)
-            takeTrainingCategoryDay()
+            takeDayGet(id)
+            clickDayCalendar()
+
+            toastSuccess('Treino cirado com sucesso !', 2000)
         } catch (error) {
             console.log(error.message)
-            toastErro('erroo treino  !', 3000)
+            loadUser()
         }
     }
-
-
-    // const [daysVtt, setdaysVtt] = useState([]);
-
-    // const [trainingAll, settrainingAll] = useState([]);
-    // const [daysAll, setdaysAll] = useState([]);
-    // // console.log(daysAll)
-    // let datas = []
-    // let datasFormatadas = []
-
-    // daysAll.forEach(element => {
-    //     // console.log(element.training)
-
-    //     const somaTotalBudget = element.training.reduce((prev, current) => {
-    //         return prev + current.volume
-    //     }, 0)
-    //     // console.log(somaTotalBudget)
-    //     const currentElement = { ...element };
-    //     currentElement.Vtt = somaTotalBudget
-    //     // console.log(currentElement)
-    //     // setdaysVtt(currentElement)
-
-    //     datas.push(element.createdAt)
-    // });
-
-
-
 
     const [daysAll, setdaysAll] = useState([]);
 
     const [trainingAll, settrainingAll] = useState([]);
 
-    const takeDayGet = async (id) => {
+    const [diaAtual, setdiaAtual] = useState({});
 
+    const takeDayGet = async (id) => {
         try {
-            const { data } = await api.get(`/days/${id}`);
+            const token = localStorage.getItem('@TOKEN')
+            const { data } = await api.get(`/days/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
             //  == DIAS 
-            // console.log(data)
-            const days = data.map(({ createdAt }) => ({ createdAt }))
-            // console.log(days)
-            // setdaysAll(days)
+            // console.log("entrou", data)
+            localStorage.setItem('@CATEGORYPARAM', id)
             setdaysAll(data)
 
+            const diaAtual2 = data.find(element => element.createdAt === new Date().toLocaleDateString());
+            setdiaAtual(diaAtual2);
 
             let trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
             trainingInDay.forEach(element => {
-                // console.log(element)
                 localStorage.setItem('@DAYTOKEN', element.id)
-
-                // console.log(element.training)
                 settrainingAll(element.training)
             });
 
-            calculateVtt();
-            toastSuccess('deu certo takeDayGet!', 8000)
-
+            takeTrainingCategoryDay()
         } catch (error) {
-            console.log(error.message)
-            toastErro('Category don`t exist  !', 3000)
+            // console.log(error.message) não logado
+            toastErro("Usuário não logado.", 2000);
+            navigate('/')
+            window.location.href = '#sec1'
+            loadUser()
+            setVisibleModal(true)
         }
 
     }
 
-
-
-    const [daysVtt, setdaysVtt] = useState([]);
-
-    const [diaAtual, setdiaAtual] = useState({});
-
-    const calculateVtt = () => {
-        const sortedDaysAll = [...daysAll].sort((a, b) => {
-            const dateA = new Date(a.createdAt.split('/').reverse().join('/'));
-            const dateB = new Date(b.createdAt.split('/').reverse().join('/'));
-            return dateA - dateB;
-        });
-
-        let previousVtt = 0;
-        // console.log(sortedDaysAll)
-        const newDaysVtt = sortedDaysAll.map(element => {
-            const somaTotalBudget = element.training.reduce((prev, current) => {
-                return prev + current.volume;
-            }, 0);
-
-            if (previousVtt > 0 && previousVtt > somaTotalBudget) {
-                return {
-                    ...element,
-                    Vtt: somaTotalBudget,
-                    BateuMeta: false,
-                    Faltante: previousVtt - somaTotalBudget
-                };
-            }
-            previousVtt = somaTotalBudget;
-
-            return {
-                ...element,
-                Vtt: somaTotalBudget,
-                BateuMeta: true
-            };
-        });
-        // console.log(newDaysVtt)
-        setdaysVtt(newDaysVtt);
-        // console.log(daysVtt)
-    };
-
+    const [atualizou, setatualizou] = useState(false)
 
     useEffect(() => {
-        // console.log("daysVtt changed. Updating diaAtual...");
-        const diaAtual2 = daysVtt.find(element => element.createdAt === new Date().toLocaleDateString());
-        // console.log(diaAtual2.Vtt)
+        const diaAtual2 = daysAll.find(element => element.createdAt === new Date().toLocaleDateString());
         setdiaAtual(diaAtual2);
-    }, [daysVtt]);
+    }, [atualizou]);
 
 
-    useEffect(() => {
-        // console.log("daysAll changed. Recalculating Vtt...");
-        calculateVtt();
-    }, [daysAll]);
+    const [date, setDate] = useState(new Date().toLocaleDateString());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    let datas = [];
-    // datas = daysAll.map(element => element.createdAt);
-    datas = daysVtt.map(element => element.createdAt);
-    // daysAll == daysVtt(tem mais coisa, Vtt, BateuMeta)
-
-    // //////////
-
-    // console.log(daysVtt)
-    // console.log(daysAll)
-    // console.log(datas)
-
-
-
-    datas.sort()
-    // console.log(datas)
-    let datasFormatadas = [];
-
-    datas.forEach((data, index) => {
-        const metaB = daysVtt.find(e => e.createdAt == data)
-        // console.log(metaB)
-
-        let [dia, mes, ano] = data.split('/');
-
-        let dataFormatada = {
-            day: parseInt(dia),
-            month: parseInt(mes),
-            year: parseInt(ano),
-            meta: metaB.BateuMeta
-        };
-
-
-        if (index == 0) {
-            dataFormatada.type = "initialDay";
-        } else if (index == datas.length - 1) {
-            dataFormatada.type = "endDay";
+    const clickDayCalendar = () => {
+        const dateClickOne = daysAll.find(element => element.createdAt === new Date(date).toLocaleDateString());
+        if (dateClickOne) {
+            setdiaAtual(dateClickOne);
+            localStorage.setItem('@DAYTOKEN', dateClickOne.id)
         } else {
-            dataFormatada.type = "otherDay";
+            setdiaAtual({});
+            localStorage.setItem('@DAYTOKEN', null)
         }
-
-        datasFormatadas.push(dataFormatada);
-
-    });
-    // console.log(datasFormatadas)
-
-
-
-    const [date, setDate] = useState(null);
-    // console.log(date)
-    const dateTemplate = (date) => {
-
-        let result = date.day;
-        datasFormatadas.forEach((element) => {
-            const currentDate = { ...date };
-            currentDate.month += 1;
-            if ((element.type === "initialDay" || element.type === "endDay" || element.type === "otherDay")
-                && element.day === currentDate.day
-                && element.month === currentDate.month
-                && element.year === currentDate.year) {
-                result = (
-                    <strong style={{ color: 'blue' }}>{date.day}</strong>
-                );
-            }
-            if ((element.type === "initialDay" || element.type === "endDay" || element.type === "otherDay")
-                && element.day === currentDate.day
-                && element.month === currentDate.month
-                && element.year === currentDate.year
-                && element.meta == false) {
-                result = (
-                    <strong style={{ color: 'red' }}>{date.day}</strong>
-                );
-            }
-        });
-        return result;
-
     }
 
-
+    useEffect(() => {
+        clickDayCalendar()
+        takeTrainingCategoryDay()
+    }, [date]);
 
 
     const [treinosDoDia, settreinosDoDia] = useState([]);
 
     const takeTrainingCategoryDay = async () => {
-
         try {
             const dayIdToken = localStorage.getItem('@DAYTOKEN')
-            // console.log(dayIdToken)
-
             const { data } = await api.get(`/training/${dayIdToken}`);
-            // console.log(data)
-
-            // calculateVtt()
             settreinosDoDia(data)
-            toastSuccess('deu certo takeTrainingCategoryDay!', 8000)
-
         } catch (error) {
             console.log(error.message)
-            toastErro('Training don`t exist  !', 3000)
+            toastErro('Training  exist  !', 3000)
         }
-
     }
-    // useEffect(() => {
-    //     (async () => {
-    //         await takeTrainingCategoryDay()
-    //     })()
 
-    // }, []);
 
-    // console.log(treinosDoDia)
 
 
 
@@ -593,10 +387,11 @@ export const ExampleProvider = ({ children }) => {
 
 
     const patchTrainingDay = async (formData) => {
-
         try {
             const trainingId = localStorage.getItem('@ID_TRAINING')
             const token = localStorage.getItem('@TOKEN')
+            const categoryParam = localStorage.getItem('@CATEGORYPARAM')
+            // const dayId = localStorage.getItem('@DAYTOKEN')
 
             const { data } = await api.patch(`/training/${trainingId}`, formData, {
                 headers: {
@@ -605,55 +400,159 @@ export const ExampleProvider = ({ children }) => {
             });
             // console.log(data)
 
-
-            calculateVtt()
-            takeTrainingCategoryDay()
-            // takeDayGet()
-            toastSuccess('treino atualizado!', 8000)
+            const daysAll2 = await api.get(`/days/${categoryParam}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            setdaysAll(daysAll2.data)
+            clickDayCalendar()
+            takeDayGet(categoryParam)
+            toastSuccess('Treino atualizado !', 2000)
         } catch (error) {
             console.log(error.message)
-            toastErro('Training don`t exist  !', 3000)
+            loadUser()
+        } finally {
+            setatualizou(!atualizou)
         }
 
     }
 
+    const delTrainingDay = async (formData) => {
+        const token = localStorage.getItem('@TOKEN')
+        const categoryParam = localStorage.getItem('@CATEGORYPARAM')
+        try {
+            const { data } = await api.delete(`/training/${formData}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
 
+            toastSuccess('Treino deletado !', 2000)
+            takeTrainingCategoryDay()
+            takeDayGet(categoryParam)
+        } catch (error) {
+            console.log(error)
+            loadUser()
+        }
+    }
 
+    let datas = [];
+    datas = daysAll.map(element => element.createdAt);
+    datas.sort()
+    let datasFormatadas = [];
 
+    datas.forEach((data, index) => {
+        const metaB = daysAll.find(e => e.createdAt == data)
+        let [dia, mes, ano] = data.split('/');
 
+        let dataFormatada = {
+            day: parseInt(dia),
+            month: parseInt(mes),
+            year: parseInt(ano),
+            meta: metaB.BateuMeta
+        };
 
+        if (index == 0) {
+            dataFormatada.type = "initialDay";
+        } else if (index == datas.length - 1) {
+            dataFormatada.type = "endDay";
+        } else {
+            dataFormatada.type = "otherDay";
+        }
+        datasFormatadas.push(dataFormatada);
+    });
 
+    const numberMetasGreen = datasFormatadas.filter((element) => element.meta === true);
+    // console.log(Object.keys(numberMetasGreen).length)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const dateTemplate = (date) => {
+        let result = date.day;
+        datasFormatadas.forEach((element) => {
+            const currentDate = { ...date };
+            currentDate.month += 1;
+            if ((element.type === "initialDay" || element.type === "endDay" || element.type === "otherDay")
+                && element.day === currentDate.day
+                && element.month === currentDate.month
+                && element.year === currentDate.year) {
+                result = (
+                    <strong className="metaGreen" style={{ color: '#00FF7F' }}>{date.day}</strong>
+                );
+            }
+            if ((element.type === "initialDay" || element.type === "endDay" || element.type === "otherDay")
+                && element.day === currentDate.day
+                && element.month === currentDate.month
+                && element.year === currentDate.year
+                && element.meta == false) {
+                result = (
+                    <strong className="metaFalse" style={{ color: '#3c3c3c' }}>{date.day}</strong>
+                );
+            }
+        });
+        return result;
+    }
 
 
 
 
     const userLogoutClearDay = () => {
+        setDate(new Date().toLocaleDateString())
+
         localStorage.removeItem('@DAYTOKEN')
+        localStorage.removeItem('@CATEGORYPARAM')
+
+        setTimeout(() => {
+            window.location.href = '#groups'
+        }, 1000);
     }
 
+    const useRedirect = (path, action, delay = 1000) => {
+        const [redirect, setRedirect] = useState(false);
+        const navigate = useNavigate();
+
+        useEffect(() => {
+            if (redirect) {
+                const timer = setTimeout(() => {
+                    if (action) action();
+                    navigate(path);
+                }, delay);
+
+                return () => clearTimeout(timer);
+            }
+        }, [redirect, navigate, path, action, delay]);
+
+        return () => setRedirect(true);
+    };
+
+
     return (
-        <ExampleContext.Provider value={{ diaAtual, takeTrainingCategoryDay, calculateVtt, patchTrainingDay, editingTraining, seteditingTraining, isOpenTrainingFill, setisOpenTrainingFill, takeTrainingCategoryDay, treinosDoDia, daysVtt, dateTemplate, date, setDate, daysAll, trainingAll, takeDayGet, userLogoutClearDay, createTraining, training, days, createDay, groups, userLogin, userPost, delClient, clientLogin, editingClient, seteditingClient, pacthClients, setIsOpenClient, isOpenClient, getUser, userClient, clientPost, toastSuccess, toastErro, setLista, user, userLogout, isOpen, setIsOpen, modalRef, buttonRef, isOpen2, setIsOpen2, setUser, lista }}>
+        <ExampleContext.Provider value={{
+            clickDayCalendar, delTrainingDay, diaAtual,
+            takeTrainingCategoryDay, patchTrainingDay, editingTraining, seteditingTraining,
+            isOpenTrainingFill, setisOpenTrainingFill, treinosDoDia, dateTemplate,
+            date, setDate, daysAll, trainingAll, takeDayGet, userLogoutClearDay, createTraining, training, days,
+            createDay, groups, userLogin, userPost,
+            toastSuccess, toastErro,
+            modalRef, buttonRef, userMETA,
+            checkboxArrow, clickInSingUp,
+            clickGoOut,
+            isOpen2, setIsOpen2,
+            visibleModal, setVisibleModal,
+            loadUser, numberMetasGreen ,
+            useRedirect
+
+            // isSignUp, setIsSignUp
+        }}>
             {children}
         </ExampleContext.Provider>
     )
 }
+// assim:: ó
 
+// const { setProductsListToCard, productsListToCard } = useProductsContext();
+
+export const useProductsContext = () => useContext(ExampleContext)
+
+
+// styles:
+{/* <header className={`${styles.flexbox} container`}> */ }

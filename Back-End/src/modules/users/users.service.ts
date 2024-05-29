@@ -29,11 +29,14 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { id } })
+    // const user = await this.prisma.user.findUnique({ where: { id } })
+    const user = await this.prisma.user.findUnique({ where: { email: id } })
     if (!user) {
       throw new NotFoundException("User does not exists")
     }
     return plainToInstance(User, user)
+
+
   }
 
   async findByEmail(email: string): Promise<User> {

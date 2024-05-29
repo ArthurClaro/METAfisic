@@ -1,11 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
 import { GroupsMusclesService } from './groups-muscles.service';
 import { CreateGroupsMuscleDto } from './dto/create-groups-muscle.dto';
 import { UpdateGroupsMuscleDto } from './dto/update-groups-muscle.dto';
 
 @Controller('groups-muscles')
 export class GroupsMusclesController {
-  constructor(private readonly groupsMusclesService: GroupsMusclesService) {}
+  constructor(private readonly groupsMusclesService: GroupsMusclesService) { }
 
   @Post()
   create(@Body() createGroupsMuscleDto: CreateGroupsMuscleDto) {
@@ -28,8 +28,9 @@ export class GroupsMusclesController {
     return this.groupsMusclesService.update(+id, updateGroupsMuscleDto);
   }
 
+  @HttpCode(204)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.groupsMusclesService.remove(+id);
+    return this.groupsMusclesService.remove(id);
   }
 }

@@ -1,11 +1,9 @@
 import { Route, Routes, useLocation } from "react-router-dom"
-import HomeLogin from "../pages/HomeLogin"
-import Register from "../pages/Register"
-import Dash from "../pages/Dashboard"
 import Training from "../pages/Training"
-import Room from "../pages/Room"
 
 import { AnimatePresence } from 'framer-motion'
+import LogIn from "../pages/LogIn"
+import Home from "../pages/Home"
 
 function Rotas() {
     const location = useLocation()
@@ -13,12 +11,13 @@ function Rotas() {
         <>
             <AnimatePresence>
                 <Routes location={location} key={location.pathname}>
-                    <Route path="/dash" element={<Dash />} />
                     
-                    <Route path="/" element={<HomeLogin />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/room" element={<Room />} />
-                    <Route path="/room/:id" element={<Training />} />
+                    <Route path="/login" element={<LogIn />} />
+
+                    <Route path="/" element={<Home />} />
+
+                    <Route path="groups/:id" element={<Training />} />
+
                 </Routes>
             </AnimatePresence>
         </>

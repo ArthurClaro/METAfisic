@@ -25,12 +25,8 @@ model User {
 
   gender    Gender   @default(Outro)
   height    Float
-  weight    Int
+  weight    Float
   createdAt DateTime @default(now())
-  // date somente 
-
-  // grupoMusculares[]
-  musics Music[]
 
   day Day[]
 }
@@ -38,15 +34,8 @@ model User {
 model GroupsMuscle {
   id   String @id @default(uuid())
   nome String @unique
-  // chest    ChestDay[]
-  // cardio   CardioDay[]
-  // day      Int
-  day  Day[]
-  // training Training[]
 
-  // diasTreinados       String
-  // dias      String
-  // volTotalTreinoDiaAnterior Int
+  day Day[]
 }
 
 model Day {
@@ -57,8 +46,8 @@ model Day {
 
   training Training[]
 
-  GroupsMuscle GroupsMuscle @relation(fields: [category], references: [nome])
-  User         User         @relation(fields: [userId], references: [id])
+  GroupsMuscle GroupsMuscle @relation(fields: [category], references: [nome], onDelete: Cascade)
+  User         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
 }
 
@@ -66,59 +55,10 @@ model Training {
   id          String @id @default(uuid())
   name        String
   serie       Int
-  kg          Int
+  kg          Float
   repetitions Int
   volume      Int
-  // cardiogDay  CardioDay? @relation(fields: [cardioDayId], references: [id])
-  // cardioDayId String?
-  // chestDay    ChestDay?  @relation(fields: [chestDayId], references: [id])
-  // chestDayId  String?
 
-  // group   GroupsMuscle? @relation(fields: [groupId], references: [id])
-  // groupId String?
   Day   Day    @relation(fields: [dayId], references: [id], onDelete: Cascade)
   dayId String
 }
-
-// model ChestDay {
-//   id       String       @id
-//   category String
-//   day      Int
-//   // volTotalTraining Int
-//   // qntFaltante        Int
-//   group    GroupsMuscle @relation(fields: [groupId], references: [id])
-//   groupId  String
-
-//   training Training[]
-// }
-
-model Music {
-  id          String  @id
-  name        String
-  album       String
-  artist      String
-  year        String
-  genre       String
-  cover_image String?
-  music_url   String?
-  user        User    @relation(fields: [userId], references: [id])
-  userId      String
-}
-
-// relations :::  1:N / 1:1 / N:N
-// https://vimeo.com/908253234/94de9f79c0?share=copy
-// min: 59:00
-
-// model TrainingComplete {
-//   id          String @id @default(uuid())
-//   category    String
-//   day         String
-//   name        String
-//   serie       Int
-//   kg          Int
-//   repetitions Int
-//   volume      Int
-
-//   Day   Day    @relation(fields: [dayId], references: [id])
-//   dayId String
-// }

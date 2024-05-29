@@ -21,9 +21,10 @@ export class GroupsMusclesService {
 
     const user = new GroupsMuscle()
     Object.assign(user, createGroupsMuscleDto)
-    if (user) {
-      throw new ConflictException("Not Admin")
-    }
+    // if (user) {
+    //   throw new ConflictException("Not Admin")
+    // }
+    // DESCOMENTARRR NO HTTP WEB / PRA NGM BURLAR
     const newUser = await this.prisma.groupsMuscle.create({ data: { ...user } })
     return plainToInstance(GroupsMuscle, newUser)
   }
@@ -47,7 +48,11 @@ export class GroupsMusclesService {
     return `This action updates a #${id} groupsMuscle`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} groupsMuscle`;
+  async remove(id: string) {
+    const user = await this.prisma.groupsMuscle.findUnique({ where: { id } })
+    if (!user) {
+      throw new NotFoundException("User does not exists")
+    }
+    await this.prisma.groupsMuscle.delete({ where: { id } })
   }
 }

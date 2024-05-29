@@ -19,16 +19,18 @@ function App() {
   return (
     <div className="App">
 
-      <PrimeReactProvider >
-        <ExampleProvider>
-          <ContactProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs} localeText={ptBR.components.MuiLocalizationProvider.defaultProps.localeText}>
-              <Rotas />
 
-            </LocalizationProvider>
-          </ContactProvider>
-        </ExampleProvider>
-      </PrimeReactProvider>
+        <PrimeReactProvider >
+          <ExampleProvider>
+            <ContactProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs} localeText={ptBR.components.MuiLocalizationProvider.defaultProps.localeText}>
+                <Rotas />
+
+              </LocalizationProvider>
+            </ContactProvider>
+          </ExampleProvider>
+        </PrimeReactProvider>
+
 
       <ToastContainer />
     </div>

@@ -1,25 +1,32 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-img{
+
+img {
     max-width: 100%;
 }
-button{
+
+button {
     background: transparent;
     border: none;
 }
-input{
+
+input {
     background: transparent;
     border: none;
 }
-ul,ol{
+
+ul,
+ol {
     list-style: none;
 }
-a{
+
+a {
     text-decoration: none;
 }
-select{
+
+select {
     border: none;
 }

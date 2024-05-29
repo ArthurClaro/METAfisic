@@ -22,18 +22,21 @@ export class DaysController {
   
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.daysService.findOne(id);
   }
 
   
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateDayDto: UpdateDayDto) {
     return this.daysService.update(id, updateDayDto);
   }
 
   @HttpCode(204)
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.daysService.remove(id);
   }

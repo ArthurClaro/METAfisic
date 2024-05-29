@@ -18,7 +18,7 @@ export class DaysService {
     const user = Object.assign(new User(), createDayDto)
 
     const foundDay = await this.prisma.day.findMany({ where: { createdAt: timestamp } })
-    // const foundDay = await this.prisma.day.findMany({ where: { createdAt: "28/02/2024" } })
+    // const foundDay = await this.prisma.day.findMany({ where: { createdAt: "28/05/2024" } })
     const foundCategory = await this.prisma.day.findMany({ where: { category: day.category } })
     const foundCategoryExists = await this.prisma.groupsMuscle.findUnique({ where: { nome: day.category } })
     // console.log(foundDay, "-----------", foundCategory)
@@ -45,12 +45,11 @@ export class DaysService {
       data: {
         id: day.id,
         category: day.category,
-        // createdAt: "28/02/2024",
         createdAt: timestamp,
+        // createdAt: "28/05/2024",
         userId
       }
     })
-
 
     return newMusic
   }
@@ -60,13 +59,57 @@ export class DaysService {
     return plainToInstance(Day, users)
   }
 
+
+
+
   async findOne(id: string) {
     const day = await this.prisma.day.findMany({ where: { category: id }, include: { training: true, GroupsMuscle: true } })
     if (!day) {
       throw new NotFoundException("Day does not exists")
     }
-    return plainToInstance(Day, day)
+
+    // const daysAll = await this.prisma.day.findMany();
+
+    const sortedDaysAll = [...day].sort((a, b) => {
+      const dateA = Number(new Date(a.createdAt));
+      const dateB = Number(new Date(b.createdAt));
+      return dateA - dateB;
+    });
+
+    let previousVtt = 0;
+
+    const newDaysVtt = sortedDaysAll.map((element) => {
+      const somaTotalBudget = element.training.reduce((prev, current) => {
+        return prev + current.volume;
+      }, 0);
+
+      if (previousVtt > 0 && previousVtt > somaTotalBudget) {
+        return {
+          ...element,
+          Vtt: somaTotalBudget,
+          BateuMeta: false,
+          Faltante: previousVtt - somaTotalBudget,
+        };
+      }
+      previousVtt = somaTotalBudget;
+
+      return {
+        ...element,
+        Vtt: somaTotalBudget,
+        BateuMeta: true,
+      };
+    });
+    // console.log(newDaysVtt)
+
+    // return newDaysVtt
+    // return plainToInstance(Day, day)
+    return plainToInstance(Day, newDaysVtt)
+    // return plainToInstance(Day, { day, newDaysVtt: newDaysVtt })
   }
+
+
+
+
 
   async update(id: string, updateDayDto: UpdateDayDto): Promise<Day> {
     const user = await this.prisma.day.findUnique({ where: { id } })

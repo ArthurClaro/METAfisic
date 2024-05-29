@@ -30,12 +30,14 @@ export class TrainingController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateTrainingDto: UpdateTrainingDto) {
     return this.trainingService.update(id, updateTrainingDto);
   }
 
   @HttpCode(204)
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.trainingService.remove(id);
   }
