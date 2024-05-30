@@ -17,8 +17,7 @@ const MapContact = () => {
             }}
         >
             <Geographies
-                geography="features.json"
-                // geography="/features.json"
+                geography="/features.json"
                 fill="#757575"
                 stroke="#FFFFFF"
                 strokeWidth={0.5}

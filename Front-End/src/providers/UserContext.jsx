@@ -200,6 +200,8 @@ export const ExampleProvider = ({ children }) => {
                 navigate(`/`);
             }
         } else {
+            navigate(`/`);
+            toastErro("Usuário não logado.", 2000);
             setuserMETA([])
             setTimeout(() => {
                 setIsOpen2(true)
@@ -249,6 +251,8 @@ export const ExampleProvider = ({ children }) => {
             takeTrainingCategoryDay()
         } catch (error) {
             // console.log(error);
+            loadUser()
+
         }
     }
 
