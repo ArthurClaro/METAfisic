@@ -156,7 +156,7 @@ function HomeMain() {
                             value="Send">SEND</button>
                     </form>
 
-                    <MapContact />
+                    {/* <MapContact /> */}
                 </section>
 
             </main>

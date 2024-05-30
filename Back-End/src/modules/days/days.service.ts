@@ -11,7 +11,11 @@ export class DaysService {
   constructor(private prisma: PrismaService) { }
 
   async create(createDayDto: CreateDayDto, userId: string) {
-    const timestamp = new Date().toLocaleDateString()
+
+    const prefix: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const timestamp = new Date().toLocaleDateString('pt-BR', prefix);
+    // const timestamp = new Date().toLocaleDateString()
+
     const day = Object.assign(new Day(), createDayDto)
     const user = Object.assign(new User(), createDayDto)
     const foundDay = await this.prisma.day.findMany({ where: { createdAt: timestamp } })

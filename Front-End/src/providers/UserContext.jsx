@@ -222,6 +222,8 @@ export const ExampleProvider = ({ children }) => {
     const [days, setdays] = useState([]);
 
     const createDay = async (formData) => {
+        console.log(formData)
+
         try {
             const token = localStorage.getItem('@TOKEN')
             const { data } = await api.post(`/days`, formData, {
@@ -229,6 +231,8 @@ export const ExampleProvider = ({ children }) => {
                     'Authorization': `Bearer ${token}`,
                 }
             });
+            console.log(data)
+            // esta vindo 05/30/2024 ?????????
             localStorage.setItem('@DAYTOKEN', data.id)
 
             toastSuccess('Dia para treino criado !', 5000)
@@ -241,20 +245,31 @@ export const ExampleProvider = ({ children }) => {
     const [training, settraining] = useState([]);
 
     const createTraining = async (formData, id) => {
+        // console.log(formData, id)
         try {
+            const token = localStorage.getItem('@TOKEN')
             try {
-                const { data } = await api.get(`/days/${id}`);
-                const trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
-                trainingInDay.forEach(element => {
-                    localStorage.setItem('@DAYTOKEN', element.id)
+                const { data } = await api.get(`/days/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
                 });
+                // const trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
+                // trainingInDay.forEach(element => {
+                //     localStorage.setItem('@DAYTOKEN', element.id)
+                // });
+                // console.log(trainingInDay)
+                const trainingInDay = data.find((day) => day.createdAt == new Date().toLocaleDateString())
+                localStorage.setItem('@DAYTOKEN', trainingInDay.id)
+                console.log(localStorage.getItem('@DAYTOKEN'))
 
             } catch (error) {
                 console.log(error.message)
+                // ?
             }
 
-            const token = localStorage.getItem('@TOKEN')
             const dayIdToken = localStorage.getItem('@DAYTOKEN')
+            console.log(dayIdToken)
 
             const { data } = await api.post(`/training/${dayIdToken}`, formData, {
                 headers: {
@@ -301,7 +316,8 @@ export const ExampleProvider = ({ children }) => {
 
             takeTrainingCategoryDay()
         } catch (error) {
-            // console.log(error.message) não logado
+            //  não logado
+            console.log(error.message)
             toastErro("Usuário não logado.", 2000);
             navigate('/')
             window.location.href = '#sec1'
@@ -350,6 +366,23 @@ export const ExampleProvider = ({ children }) => {
             toastErro('Training  exist  !', 3000)
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

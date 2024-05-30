@@ -24,6 +24,8 @@ function TrainingMain() {
 
     const { toastErro, createDay, numberMetasGreen, seteditingTraining, diaAtual, isOpenTrainingFill, setisOpenTrainingFill, takeTrainingCategoryDay, createTraining, treinosDoDia, takeDayGet, dateTemplate, date, setDate } = useProductsContext()
     const { id } = useParams()
+    // braço? 
+    // console.log(String(id))
 
     useEffect(() => {
         (async () => {
