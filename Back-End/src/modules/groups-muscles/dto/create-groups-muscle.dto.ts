@@ -1,8 +1,6 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString, MinLength } from "class-validator"
+import { IsNotEmpty, IsString } from "class-validator"
 
 export class CreateGroupsMuscleDto {
-    // id: string
-
     @IsString()
     @IsNotEmpty()
     nome: string

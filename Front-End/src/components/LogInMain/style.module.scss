@@ -33,14 +33,23 @@
         flex-direction: column;
         font-family: 'Poppins', sans-serif;
 
-        @media (min-width:431px) {
-            max-width: 100% !important;
-            height: 100vh;
+        height: 100vh;
+        width: 100%;
+
+        @media (min-width:992px) {
+            flex-direction: row;
         }
-        
-        @media (max-width: 432px) {
-            // background: red;
-            // padding: 10px 15px;
+
+        .rightDesktop {
+            display: none;
+
+            @media (min-width:992px) {
+                display: flex;
+            }
+
+            img {
+                object-fit: cover;
+            }
         }
     }
 

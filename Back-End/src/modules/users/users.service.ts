@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
@@ -29,13 +29,12 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    // const user = await this.prisma.user.findUnique({ where: { id } })
     const user = await this.prisma.user.findUnique({ where: { email: id } })
+
     if (!user) {
       throw new NotFoundException("User does not exists")
     }
     return plainToInstance(User, user)
-
 
   }
 
@@ -55,9 +54,10 @@ export class UsersService {
 
   async remove(id: string) {
     const user = await this.prisma.user.findUnique({ where: { id } })
-    if (!user) {
-      throw new NotFoundException("User does not exists")
+    if (user) {
+      throw new ConflictException("Not Admin")
     }
+    // LOCK HTTP DEL USER 
     await this.prisma.user.delete({ where: { id } })
   }
 }

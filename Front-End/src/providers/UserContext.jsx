@@ -66,10 +66,6 @@ export const ExampleProvider = ({ children }) => {
 
     const [visibleModal, setVisibleModal] = useState(false);
 
-
-    // ///////////////////////////////////////////////////////////////////
-
-
     const checkboxArrow = useRef(null)
 
     const clickInSingUp = (trueOrF, time) => {
@@ -87,10 +83,10 @@ export const ExampleProvider = ({ children }) => {
         toastSuccess('Usuário META deslogado.', 2000)
         window.location.href = '#sec1'
     }
-    
+
     // ///////////////////////////////////////////////////////////////////
 
-
+    // LOGIN & GROUPS
 
     const userPost = async (formData) => {
         try {
@@ -219,23 +215,9 @@ export const ExampleProvider = ({ children }) => {
         }
     }, [groups]);
 
+    // ////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // /////////////////////////////////////////////////
+    // TRAINING CREATE
 
     const [days, setdays] = useState([]);
 
@@ -259,7 +241,6 @@ export const ExampleProvider = ({ children }) => {
     const [training, settraining] = useState([]);
 
     const createTraining = async (formData, id) => {
-        // console.log("----------", formData, id)
         try {
             try {
                 const { data } = await api.get(`/days/${id}`);
@@ -306,7 +287,6 @@ export const ExampleProvider = ({ children }) => {
                 }
             });
             //  == DIAS 
-            // console.log("entrou", data)
             localStorage.setItem('@CATEGORYPARAM', id)
             setdaysAll(data)
 
@@ -374,32 +354,25 @@ export const ExampleProvider = ({ children }) => {
 
 
 
+    // ////////////////////////////////////////////////////////////////////////
 
+    // TRAINING ALTER
 
-
-
-    // /////////////// PATCH
     const [isOpenTrainingFill, setisOpenTrainingFill] = useState(false)
 
     const [editingTraining, seteditingTraining] = useState(null)
-
-    // console.log(editingTraining)
-
 
     const patchTrainingDay = async (formData) => {
         try {
             const trainingId = localStorage.getItem('@ID_TRAINING')
             const token = localStorage.getItem('@TOKEN')
             const categoryParam = localStorage.getItem('@CATEGORYPARAM')
-            // const dayId = localStorage.getItem('@DAYTOKEN')
 
             const { data } = await api.patch(`/training/${trainingId}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            // console.log(data)
-
             const daysAll2 = await api.get(`/days/${categoryParam}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -464,7 +437,6 @@ export const ExampleProvider = ({ children }) => {
     });
 
     const numberMetasGreen = datasFormatadas.filter((element) => element.meta === true);
-    // console.log(Object.keys(numberMetasGreen).length)
 
     const dateTemplate = (date) => {
         let result = date.day;
@@ -491,9 +463,6 @@ export const ExampleProvider = ({ children }) => {
         });
         return result;
     }
-
-
-
 
     const userLogoutClearDay = () => {
         setDate(new Date().toLocaleDateString())
@@ -524,6 +493,9 @@ export const ExampleProvider = ({ children }) => {
         return () => setRedirect(true);
     };
 
+    // ////////////////////////////////////////////////////////////////////////
+
+    // USER EDIT
 
     return (
         <ExampleContext.Provider value={{
@@ -538,21 +510,12 @@ export const ExampleProvider = ({ children }) => {
             clickGoOut,
             isOpen2, setIsOpen2,
             visibleModal, setVisibleModal,
-            loadUser, numberMetasGreen ,
+            loadUser, numberMetasGreen,
             useRedirect
-
-            // isSignUp, setIsSignUp
         }}>
             {children}
         </ExampleContext.Provider>
     )
 }
-// assim:: ó
-
-// const { setProductsListToCard, productsListToCard } = useProductsContext();
 
 export const useProductsContext = () => useContext(ExampleContext)
-
-
-// styles:
-{/* <header className={`${styles.flexbox} container`}> */ }

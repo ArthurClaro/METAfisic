@@ -1,0 +1,360 @@
+// btn container que vai pro lado = OPTIONS
+
+.modalFixed {
+  position: fixed;
+  z-index: 3;
+  right: 0px;
+  bottom: 0px;
+}
+
+.p-speeddial {
+  @media (min-width:992px) {
+      right: 65px !important;
+      bottom: 60px !important;
+  }
+}
+
+.p-speeddial-button {
+  border-radius: 50%;
+  color: #00FF7F;
+  background-color: black;
+  border: 1px solid #00FF7F !important;
+
+  @media (min-width:992px) {
+      scale: 1.2;
+  }
+
+  img {
+      width: 33px;
+  }
+}
+
+.p-speeddial-opened .p-speeddial-rotate {
+  transform: rotate(90deg) !important;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+.p-button:focus {
+  box-shadow: none !important;
+}
+
+// icon
+.p-speeddial-action {
+  color: #00FF7F;
+  scale: 1.4;
+
+  :hover {
+      scale: 1.1;
+      transition: all 400ms ease-out;
+  }
+
+  ::before {
+      background-color: black;
+      padding: 9px;
+      border-radius: 50%;
+  }
+}
+
+.p-speeddial-item {
+  :hover {
+      color: #00FF7F;
+      text-decoration: none;
+      list-style: none;
+      border: none;
+  }
+}
+
+
+//////////////// aberto: 
+
+.p-sidebar {
+  width: 85%;
+  background-color: #1d1d1d;
+  color: white;
+
+  .p-sidebar-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.431);
+
+      .header {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          img {
+              height: 35px;
+              object-fit: cover;
+          }
+
+          span {
+              color: #00FF7F;
+              font-weight: 700;
+              font-size: 22px;
+              padding-left: 2px;
+              letter-spacing: 1px;
+              padding-top: 10px;
+          }
+      }
+
+      .p-sidebar-icons {
+          button {
+              color: white;
+              border: 1px solid #00FF7F;
+              border-radius: 50%;
+          }
+      }
+  }
+
+  .p-sidebar-content {
+      padding-top: 26px;
+      max-height: 86vh;
+
+      .userOff {
+          display: flex;
+          flex-direction: column;
+          gap: 0px;
+          font-family: monospace;
+
+          div {
+              // .wrapper
+              @media (min-width:992px) {
+                  justify-content: center;
+              }
+
+              span {
+                  color: #00FF7F;
+              }
+          }
+      }
+
+      .userON {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          font-family: monospace;
+
+          .divU {
+              display: flex;
+              flex-direction: column;
+
+              h2 {
+                  display: flex;
+                  flex-direction: column;
+                  text-align: center;
+
+                  span {
+                      color: #00FF7F;
+                  }
+              }
+
+              div {
+                  display: flex;
+                  flex-direction: row;
+                  gap: 11px;
+                  justify-content: center;
+
+                  span {
+                      color: #00FF7F;
+                  }
+              }
+          }
+
+          .w-full {
+              margin: 0 !important;
+              padding: 0 !important;
+              background-color: transparent;
+              border: none;
+              overflow-y: auto;
+              height: 500vh;
+              padding-top: 15px !important;
+              font-family: monospace;
+
+              .p-tree-container {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+              }
+
+              .p-treenode {
+                  .p-treenode-children {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 15px;
+
+                      .p-treenode-leaf {
+                          box-shadow: -10px 3px 0px 0px rgba(0, 255, 128, 1);
+                          border-radius: 10px;
+                          padding-bottom: 0px;
+
+                          .p-treenode-content {
+                              display: flex;
+                              flex-direction: row-reverse;
+                              justify-content: flex-end;
+                              padding-left: 25px;
+                              padding-bottom: 14px;
+                          }
+                      }
+                  }
+              }
+
+              .p-treenode-content {
+                  background-color: none;
+                  border: none;
+
+                  button {
+                      background-color: transparent;
+                      border: none;
+                      color: #00FF7F !important;
+                  }
+
+                  .p-treenode-label {
+                      pointer-events: none;
+
+                      b {
+                          span {
+                              display: flex;
+                              font-weight: 500;
+                              font-size: 18px;
+                              letter-spacing: 0.5px;
+                              flex-direction: row-reverse;
+                              align-items: center;
+                              gap: 9px;
+                              color: #00FF7F;
+
+                              p {
+                                  color: rgb(129, 147, 174);
+                                  margin: 0;
+                                  font-family: "Inter var", sans-serif;
+                              }
+                          }
+                      }
+
+                      button {
+                          pointer-events: all !important;
+                      }
+
+                      a {
+                          color: #00FF7F !important;
+                          word-break: break-word;
+                          pointer-events: all !important;
+                          text-decoration: none;
+                      }
+                  }
+              }
+
+
+          }
+
+          .w-full::-webkit-scrollbar {
+              width: 1px;
+          }
+
+          .w-full::-webkit-scrollbar-track {
+              background: transparent;
+              border-radius: 20px;
+          }
+
+          .w-full::-webkit-scrollbar-thumb {
+              background-color: transparent;
+              border-radius: 20px;
+              border: 3px solid #00FF7F;
+          }
+
+
+          .deslogBtn {
+              text-decoration: none;
+              background-color: transparent;
+              display: flex;
+              height: 100%;
+              align-items: center;
+              list-style: none;
+              justify-content: center;
+              border-top: 1px solid white;
+              color: rgb(129, 147, 174);
+              cursor: pointer;
+
+              button {
+                  border: none;
+              }
+          }
+      }
+
+
+
+  }
+}
+
+// / userOff , = LogIn SingUp
+.wrapper {
+  display: flex;
+  gap: 10px;
+  padding-top: 82px;
+}
+
+.wrapper>div {
+  text-align: center;
+}
+
+.wrapper>div+div {
+  border-inline-start: 1px solid #d6cfcf;
+  padding-inline-start: 15px;
+}
+
+.wrapper>div>p {
+  margin-top: 15px;
+  max-width: 200px;
+}
+
+.wrapper a {
+  display: inline-flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #191919;
+  color: #00FF7F;
+  position: relative;
+  text-decoration: none;
+}
+
+.data-tooltip::before,
+.data-tooltip::after {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all 0.2s ease;
+}
+
+.data-tooltip::before {
+  content: attr(data-tooltip-content);
+  width: fit-content;
+  font-size: small;
+  font-weight: 600;
+  background-color: inherit;
+  padding: 3px 10px;
+  border-radius: 4px;
+  bottom: calc(100% + 5px);
+}
+
+.data-tooltip::after {
+  content: "";
+  border-top: 5px solid #191919;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  bottom: calc(100% + 1px);
+}
+
+.data-tooltip:hover::before,
+.data-tooltip:hover::after {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,5 +1,4 @@
 import HomeMain from "../../components/HomeMain"
-import RoomSec from "../../components/HomeMain"
 import {motion} from 'framer-motion'
 
 function Home() {

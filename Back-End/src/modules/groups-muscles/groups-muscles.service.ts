@@ -4,12 +4,11 @@ import { UpdateGroupsMuscleDto } from './dto/update-groups-muscle.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { GroupsMuscle } from './entities/groups-muscle.entity';
 import { plainToInstance } from 'class-transformer';
-import { Day } from '../days/entities/day.entity';
 
 @Injectable()
 export class GroupsMusclesService {
-
   constructor(private prisma: PrismaService) { }
+
   async create(createGroupsMuscleDto: CreateGroupsMuscleDto) {
     const foundUser = await this.prisma.groupsMuscle.findFirst({
       where: { nome: createGroupsMuscleDto.nome }
@@ -18,13 +17,12 @@ export class GroupsMusclesService {
     if (foundUser) {
       throw new ConflictException("Nome already exists")
     }
-
     const user = new GroupsMuscle()
     Object.assign(user, createGroupsMuscleDto)
-    // if (user) {
-    //   throw new ConflictException("Not Admin")
-    // }
-    // DESCOMENTARRR NO HTTP WEB / PRA NGM BURLAR
+    if (user) {
+      throw new ConflictException("Not Admin")
+    }
+    // LOCK HTTP CREATE GROUPS 
     const newUser = await this.prisma.groupsMuscle.create({ data: { ...user } })
     return plainToInstance(GroupsMuscle, newUser)
   }
@@ -34,7 +32,6 @@ export class GroupsMusclesService {
     return plainToInstance(GroupsMuscle, users)
   }
 
-
   async findOne(id: string): Promise<GroupsMuscle> {
     const user = await this.prisma.groupsMuscle.findUnique({ where: { id }, include: { day: true } })
     if (!user) {
@@ -42,7 +39,6 @@ export class GroupsMusclesService {
     }
     return plainToInstance(GroupsMuscle, user)
   }
-
 
   update(id: number, updateGroupsMuscleDto: UpdateGroupsMuscleDto) {
     return `This action updates a #${id} groupsMuscle`;

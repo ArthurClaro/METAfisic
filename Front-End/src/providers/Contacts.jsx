@@ -6,9 +6,11 @@ import { api } from "../services/api";
 export const ContactContext = createContext({})
 
 export const ContactProvider = ({ children }) => {
+    // ////////////////////////////////////////////////////////////////////////
+
+    // none used ALL
 
     const { toastSuccess, getUser, toastErro } = useContext(ExampleContext)
-
 
     const createContact = async (formData) => {
         const token = localStorage.getItem('@TOKEN')

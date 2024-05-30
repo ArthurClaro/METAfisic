@@ -13,7 +13,6 @@ export class GroupsMusclesController {
   }
 
   @Get()
-  // @UseGuards(JwtAuthGuard)
   findAll() {
     return this.groupsMusclesService.findAll();
   }

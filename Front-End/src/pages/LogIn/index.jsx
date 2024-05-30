@@ -1,7 +1,6 @@
 import LogInMain from "../../components/LogInMain"
 import {motion} from 'framer-motion'
 
-
 function LogIn() {
 
     return (

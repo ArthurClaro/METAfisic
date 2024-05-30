@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ExampleContext, useProductsContext } from "../../providers/UserContext";
+import { useProductsContext } from "../../providers/UserContext";
 import styles from './style.module.scss'
 import LogoHome from '../../assets/home.png'
 import LogoModal from '../../assets/modal.png'

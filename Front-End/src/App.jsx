@@ -2,7 +2,6 @@ import { ExampleProvider } from "./providers/UserContext"
 import { ContactProvider } from "./providers/Contacts";
 import Rotas from "./routes/Rotas"
 import './style/index.scss'
-// import './style/globals.css'
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -5,6 +5,7 @@ import { GiBodyHeight } from "react-icons/gi";
 import { GiWeight } from "react-icons/gi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { RiLockPasswordLine } from "react-icons/ri";
+import LogoLogin from '../../assets/LogoLogin.png'
 
 import { Password } from 'primereact/password';
 import { useEffect, useState } from "react";
@@ -153,6 +154,11 @@ function LogInMain() {
                             </div>
                         </div>
                     </div>
+
+                    <div className={styles.rightDesktop}>
+                        <img src={LogoLogin} alt="logoLog" />
+                    </div>
+
                 </div>
             </div>
         </>

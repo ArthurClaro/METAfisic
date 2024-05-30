@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 
 import LogoModal from '../../../assets/modal.png'
-
 import 'primeicons/primeicons.css';
-
 import 'animate.css';
 
 import { Stepper } from 'primereact/stepper';
@@ -12,7 +10,6 @@ import { Button } from 'primereact/button';
 import { Fieldset } from 'primereact/fieldset';
 
 import { useProductsContext } from '../../../providers/UserContext';
-
 
 function AboutDivs() {
     const { clickInSingUp, useRedirect, setVisibleModal } = useProductsContext()

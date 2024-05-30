@@ -6,7 +6,6 @@ import {
     Annotation,
     ZoomableGroup
 } from "react-simple-maps";
-// import Reaawdct from "/";
 
 const MapContact = () => {
     return (
@@ -43,7 +42,6 @@ const MapContact = () => {
             >
                 <text 
                 x="-8"
-                //  style={{}}
                 textAnchor="end" alignmentBaseline="middle" fill="#00FF7F">
                     {"Paris"}
                 </text>

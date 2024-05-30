@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, Response, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, HttpCode } from '@nestjs/common';
 import { TrainingService } from './training.service';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
@@ -11,11 +11,6 @@ export class TrainingController {
   @Post(':id')
   @UseGuards(JwtAuthGuard)
   create(@Body() createTrainingDto: CreateTrainingDto, @Param('id') id: string) {
-    // console.log(">>>>>>>>", req.user , "<<<<<<<<<<")
-    // console.log(">>>>>>>>", res.params, "<<<<<<<<<<")
-    // console.log(">>>>>>>>", id, "<<<<<<<<<<")
-
-    // return this.trainingService.create(createTrainingDto, req.user.id);
     return this.trainingService.create(createTrainingDto, id);
   }
 

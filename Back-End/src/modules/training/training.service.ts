@@ -8,17 +8,14 @@ import { Day } from '../days/entities/day.entity';
 
 @Injectable()
 export class TrainingService {
-
   constructor(private prisma: PrismaService) { }
-  async create(createTrainingDto: CreateTrainingDto, dayId: string) {
 
+  async create(createTrainingDto: CreateTrainingDto, dayId: string) {
     const day1 = new Day()
     const dayFound = await this.prisma.day.findUnique({ where: { id: dayId } })
     if (!dayFound) {
       throw new NotFoundException("Day does not exists")
     }
-    // console.log('awddwa', dayFound)
-
     const training = Object.assign(new Training(), createTrainingDto)
     const vtt = Number((training.kg * training.repetitions) * training.serie)
     const newArr = await this.prisma.training.create({
@@ -45,21 +42,12 @@ export class TrainingService {
 
   async findOne(id: string) {
     const day = await this.prisma.training.findMany({ where: { dayId: id } })
-    // const day = await this.prisma.training.findMany({ where: { dayId: id }, include: { Day: true } })
+
     if (!day) {
       throw new NotFoundException("Training does not exists")
     }
-    // const total = day.reduce((prev, current) => {
-    //   return prev + current.volume;
-    // }, 0);
-
-
-    // return plainToInstance(Training, { day, TotalVol: total })
     return plainToInstance(Training, day)
   }
-
-
-
 
   async update(id: string, updateTrainingDto: UpdateTrainingDto): Promise<Training> {
     const user = await this.prisma.training.findUnique({ where: { id } })
@@ -74,10 +62,6 @@ export class TrainingService {
     return plainToInstance(Training, updatedUser)
   }
 
-  // update(id: number, updateTrainingDto: UpdateTrainingDto) {
-  //   return `This action updates a #${id} training`;
-  // }
-
   async remove(id: string) {
     const user = await this.prisma.training.findUnique({ where: { id } })
     if (!user) {
@@ -85,8 +69,4 @@ export class TrainingService {
     }
     await this.prisma.training.delete({ where: { id } })
   }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} training`;
-  // }
 }

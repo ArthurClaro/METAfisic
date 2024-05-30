@@ -11,7 +11,6 @@ export class DaysController {
   @Post()
   @UseGuards(JwtAuthGuard)
   create(@Body() createDayDto: CreateDayDto, @Request() req) {
-    // console.log(createDayDto)
     return this.daysService.create(createDayDto, req.user.id);
   }
 
@@ -19,7 +18,6 @@ export class DaysController {
   findAll() {
     return this.daysService.findAll();
   }
-  
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
@@ -27,7 +25,6 @@ export class DaysController {
     return this.daysService.findOne(id);
   }
 
-  
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateDayDto: UpdateDayDto) {

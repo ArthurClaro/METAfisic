@@ -1,4 +1,4 @@
-import { ExampleContext, useProductsContext } from "../../../providers/UserContext"
+import { useProductsContext } from "../../../providers/UserContext"
 import styles from './style.module.scss'
 
 import 'animate.css';

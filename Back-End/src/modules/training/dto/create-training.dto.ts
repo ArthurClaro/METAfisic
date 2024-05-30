@@ -16,10 +16,4 @@ export class CreateTrainingDto {
     @IsNumber()
     @IsNotEmpty()
     repetitions: number
-
-    // @IsNumber()
-    // @IsNotEmpty()
-    // volume: number
-
-
 }

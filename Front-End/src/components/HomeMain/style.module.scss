@@ -25,17 +25,15 @@
         min-width: 100vw;
         padding: 0;
         margin: 0;
-        // background-color: red !important;
-        // all secs cima
         padding: 0px 50px;
 
         @media (max-width: 385px) {
             padding: 0px 30px;
         }
+
         @media (max-width: 346px) {
             padding: 0px 15px;
         }
-
     }
 }
 
@@ -87,7 +85,6 @@
     }
 
     .arrowLinkB {
-        // padding-top: 210px;
         opacity: 0;
         animation: dentroPfora 1s ease forwards, voar2 4s ease-in-out infinite;
         animation-delay: 1s, 2s;
@@ -122,17 +119,15 @@
 
 
 .sec2 {
-    // background-color: red;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    // gap: 5px;
-    // padding-top: 28px !important;
     font-family: monospace;
 
     h1 {
         color: aliceblue;
         white-space: nowrap;
+
         @media (max-width: 380px) {
             white-space: break-spaces;
         }
@@ -148,10 +143,18 @@
         flex-direction: row;
         justify-content: space-between;
 
+        @media (min-width:992px) {
+            gap: 50px 15px;
+            justify-content: space-around;
+        }
+
         &>li {
             list-style: none;
             height: 100%;
             width: 43%;
+            @media (min-width:992px) {
+                width: 32%;
+            }
 
             &>a {
                 display: flex;
@@ -170,11 +173,13 @@
                 background-color: #1d1d1d;
 
                 &>img {
-                    /* width: 55%; */
                     height: 89px;
-                    /* min-width: 83%; */
                     min-height: 89px;
                     object-fit: cover;
+
+                    @media (min-width:992px) {
+                        min-height: 150px;
+                    }
                 }
 
                 &>h2 {
@@ -190,11 +195,15 @@
 .sec3 {
     display: flex;
     flex-direction: column;
-    // padding-top: 28px !important;
     justify-content: space-evenly;
     gap: 50px;
     margin-top: 50px !important;
-    
+
+    @media (min-width:992px) {
+        flex-direction: row !important;
+        align-items: center !important;
+        min-height: 90vh !important;
+    }
 }
 
 .sec4 {
@@ -216,23 +225,25 @@
         display: flex;
         flex-direction: column;
         gap: 24px;
+
         @media (max-width: 385px) {
             padding: 0px 30px;
         }
+
         @media (max-width: 346px) {
             padding: 0px 15px;
         }
-        p{
+
+        p {
             font-size: 31px;
             margin: 0;
-        letter-spacing: 1px;
+            letter-spacing: 1px;
         }
     }
 
     &>svg {
         z-index: 1;
         pointer-events: none;
-        // border-radius: 9px;
         width: 100%;
         height: 100%;
         height: 100vh;

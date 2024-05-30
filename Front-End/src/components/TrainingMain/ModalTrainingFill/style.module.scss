@@ -16,8 +16,6 @@
     display: flex;
     width: 100%;
     max-width: 568px;
-    // height: 100%;
-    // max-height: 40%;
     flex-direction: column;
     background: black;
     color: white;
@@ -26,7 +24,6 @@
     animation: dentroPfora 1s ease forwards;
     padding: 0px 20px;
     font-family: monospace;
-
 }
 
 @keyframes dentroPfora {

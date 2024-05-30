@@ -5,7 +5,7 @@ import { formTraining } from "./formTraining";
 import { zodResolver } from "@hookform/resolvers/zod"
 import styles from './style.module.scss'
 import { trainingExamples } from "../../data/cards";
-import { ExampleContext, useProductsContext } from "../../providers/UserContext";
+import { useProductsContext } from "../../providers/UserContext";
 import '../../style/index.scss'
 
 import { Calendar } from 'primereact/calendar';
@@ -29,8 +29,6 @@ function TrainingMain() {
         (async () => {
             await takeDayGet(id)
             await takeTrainingCategoryDay()
-            // await clickDayCalendar()
-            // await takeTrainingCategoryDay()
         })()
     }, []);
 
@@ -128,8 +126,10 @@ function TrainingMain() {
                                 <p>Meta Batida</p>
                             ) : (
                                 <div>
-                                    <h5>Quanto falta: {diaAtual.Faltante}</h5>
-                                    <p >Meta <span>NÃO</span> Batida</p>
+                                    <article>
+                                        <h5>Quanto falta: {diaAtual.Faltante}</h5>
+                                        <p >Meta <span>NÃO</span> Batida</p>
+                                    </article>
                                     {diaAtual.createdAt === new Date().toLocaleDateString() && (
                                         <button onClick={() => suggestTraining(id)}>Sugerir Treino</button>
                                     )}
@@ -144,6 +144,7 @@ function TrainingMain() {
                                 <h4>Não corresponde ao dia atual ,espere pelo dia para adicionar novos treinos...</h4>
                             )}
                         </div>
+
                     )}
 
                 </section>
@@ -198,11 +199,15 @@ function TrainingMain() {
                             <input type="number" step="00.01" id="kg" {...register('kg')} placeholder="Quantos Kilos?" />
                             {errors.kg ? toastErro(`${errors.kg.message}`, 3000) : null}
 
-                            <label htmlFor="repetitions">Repetições</label>
-                            <input type="number" id="repetitions"  {...register('repetitions')} placeholder="Quantas Respticões?" />
-                            {errors.repetitions ? toastErro(`${errors.repetitions.message}`, 3000) : null}
+                            <div className={styles.divFlexDesktop}>
+                                <div>
+                                    <label htmlFor="repetitions">Repetições</label>
+                                    <input type="number" id="repetitions"  {...register('repetitions')} placeholder="Quantas Repeticões?" />
+                                </div>
+                                {errors.repetitions ? toastErro(`${errors.repetitions.message}`, 3000) : null}
 
-                            <button className="cadasterBtn" type="submit">Cadastrar</button>
+                                <button className="cadasterBtn" type="submit">Cadastrar</button>
+                            </div>
                         </form>
                     ) : (
                         null

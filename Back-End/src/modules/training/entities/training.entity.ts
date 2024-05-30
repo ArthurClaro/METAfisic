@@ -6,8 +6,6 @@ export class Training {
     repetitions: number
     volume: number
 
-
     dayId?: string | null
-
 
 }
