@@ -5,4 +5,3 @@ Back-End (Render) :
 https://metafisic.onrender.com/
 
 Front-End (Vercel) :
-https://meta-p5f9kwz6w-arthurclaros-projects.vercel.app/
