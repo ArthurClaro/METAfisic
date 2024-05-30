@@ -19,9 +19,9 @@ export class GroupsMusclesService {
     }
     const user = new GroupsMuscle()
     Object.assign(user, createGroupsMuscleDto)
-    if (user) {
-      throw new ConflictException("Not Admin")
-    }
+    // if (user) {
+    //   throw new ConflictException("Not Admin")
+    // }
     // LOCK HTTP CREATE GROUPS 
     const newUser = await this.prisma.groupsMuscle.create({ data: { ...user } })
     return plainToInstance(GroupsMuscle, newUser)
