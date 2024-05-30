@@ -4,4 +4,5 @@ https://app.diagrams.net/#G1tgYEDPval-_ickFfs7RqkPxkXAIMcC1w#%7B%22pageId%22%3A%
 Back-End (Render) :
 https://metafisic.onrender.com/
 
-Front-End (Vercel) :
+Front-End (Vercel) : por enquanto
+https://meta-fqcwyg5lw-arthurclaros-projects.vercel.app/
