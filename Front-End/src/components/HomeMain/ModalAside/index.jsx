@@ -59,6 +59,9 @@ function ModalAside() {
     const goSection = (ref) => {
         setVisibleModal(false)
         window.location.href = ref
+        const urlParts = ref.split('/');
+        const categoryParam = urlParts[urlParts.length - 1]; 
+        localStorage.setItem('@CATEGORYPARAM', categoryParam);
     }
 
     const nodeTemplate = (node, options) => {

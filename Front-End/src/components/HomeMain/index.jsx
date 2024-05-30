@@ -112,7 +112,10 @@ function HomeMain() {
                     <ul>
                         {groups.map(group => {
                             return <li key={group.id}>
-                                <Link onClick={() => upMain()} to={`/groups/${group.nome}`}>
+                                <Link onClick={() => {
+                                    upMain()
+                                    localStorage.setItem('@CATEGORYPARAM', group.nome)
+                                }} to={`/groups/${group.nome}`}>
                                     <img src={group.imageURL} alt={group.nome} />
                                     <h2> {group.nome.charAt(0).toUpperCase() + group.nome.slice(1)}</h2>
                                 </Link>
@@ -156,7 +159,7 @@ function HomeMain() {
                             value="Send">SEND</button>
                     </form>
 
-                    {/* <MapContact /> */}
+                    <MapContact />
                 </section>
 
             </main>

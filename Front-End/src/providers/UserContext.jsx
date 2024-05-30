@@ -96,7 +96,6 @@ export const ExampleProvider = ({ children }) => {
                 clickInSingUp(false)
             }, 2000);
         } catch (error) {
-            // console.log(error.message)
             toastErro('E-mail já cadastrado !', 3000)
         }
     }
@@ -179,7 +178,6 @@ export const ExampleProvider = ({ children }) => {
                 }, 2300);
             }, 2000);
         } catch (error) {
-            // console.log(error.message)
             toastErro('Senha ou e-mail incorretos !', 3000)
         }
     }
@@ -219,121 +217,40 @@ export const ExampleProvider = ({ children }) => {
 
     // TRAINING CREATE
 
-    const [days, setdays] = useState([]);
-
-    const createDay = async (formData) => {
-        console.log(formData)
-
+    const [treinosDoDia, settreinosDoDia] = useState([]);
+    const takeTrainingCategoryDay = async () => {
         try {
-            const token = localStorage.getItem('@TOKEN')
-            const { data } = await api.post(`/days`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            console.log(data)
-            // esta vindo 05/30/2024 ?????????
-            localStorage.setItem('@DAYTOKEN', data.id)
-
-            toastSuccess('Dia para treino criado !', 5000)
-            setdays(data)
-        } catch (error) {
-            // console.log(error.message)
-        }
-    }
-
-    const [training, settraining] = useState([]);
-
-    const createTraining = async (formData, id) => {
-        // console.log(formData, id)
-        try {
-            const token = localStorage.getItem('@TOKEN')
-            try {
-                const { data } = await api.get(`/days/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    }
-                });
-                // const trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
-                // trainingInDay.forEach(element => {
-                //     localStorage.setItem('@DAYTOKEN', element.id)
-                // });
-                // console.log(trainingInDay)
-                const trainingInDay = data.find((day) => day.createdAt == new Date().toLocaleDateString())
-                localStorage.setItem('@DAYTOKEN', trainingInDay.id)
-                console.log(localStorage.getItem('@DAYTOKEN'))
-
-            } catch (error) {
-                console.log(error.message)
-                // ?
-            }
-
             const dayIdToken = localStorage.getItem('@DAYTOKEN')
-            console.log(dayIdToken)
-
-            const { data } = await api.post(`/training/${dayIdToken}`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            settraining(data)
-            takeDayGet(id)
-            clickDayCalendar()
-
-            toastSuccess('Treino cirado com sucesso !', 2000)
+            const { data } = await api.get(`/training/${dayIdToken}`);
+            settreinosDoDia(data)
         } catch (error) {
             console.log(error.message)
-            loadUser()
+            toastErro('Training  exist  !', 3000)
         }
     }
 
     const [daysAll, setdaysAll] = useState([]);
 
-    const [trainingAll, settrainingAll] = useState([]);
-
     const [diaAtual, setdiaAtual] = useState({});
 
-    const takeDayGet = async (id) => {
+    const setDayTokenBefore = async (ids) => {
         try {
             const token = localStorage.getItem('@TOKEN')
-            const { data } = await api.get(`/days/${id}`, {
+            const { data } = await api.get(`/days/${ids}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            //  == DIAS 
-            localStorage.setItem('@CATEGORYPARAM', id)
+            localStorage.setItem('@DAYTOKEN', data[0].id)
             setdaysAll(data)
-
-            const diaAtual2 = data.find(element => element.createdAt === new Date().toLocaleDateString());
-            setdiaAtual(diaAtual2);
-
-            let trainingInDay = data.filter((day) => day.createdAt == new Date().toLocaleDateString())
-            trainingInDay.forEach(element => {
-                localStorage.setItem('@DAYTOKEN', element.id)
-                settrainingAll(element.training)
-            });
+            const today = data.find(element => element.createdAt === new Date().toLocaleDateString());
+            setdiaAtual(today);
 
             takeTrainingCategoryDay()
         } catch (error) {
-            //  não logado
-            console.log(error.message)
-            toastErro("Usuário não logado.", 2000);
-            navigate('/')
-            window.location.href = '#sec1'
-            loadUser()
-            setVisibleModal(true)
+            // console.log(error);
         }
-
     }
-
-    const [atualizou, setatualizou] = useState(false)
-
-    useEffect(() => {
-        const diaAtual2 = daysAll.find(element => element.createdAt === new Date().toLocaleDateString());
-        setdiaAtual(diaAtual2);
-    }, [atualizou]);
-
 
     const [date, setDate] = useState(new Date().toLocaleDateString());
 
@@ -354,38 +271,40 @@ export const ExampleProvider = ({ children }) => {
     }, [date]);
 
 
-    const [treinosDoDia, settreinosDoDia] = useState([]);
-
-    const takeTrainingCategoryDay = async () => {
+    const createDay = async (categoryObj, formData) => {
         try {
-            const dayIdToken = localStorage.getItem('@DAYTOKEN')
-            const { data } = await api.get(`/training/${dayIdToken}`);
-            settreinosDoDia(data)
+            const token = localStorage.getItem('@TOKEN')
+            const { data } = await api.post(`/days`, categoryObj, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            localStorage.setItem('@DAYTOKEN', data.id)
+            toastSuccess('Dia para treino criado !', 5000)
+            createTraining(formData, categoryObj.category)
         } catch (error) {
-            console.log(error.message)
-            toastErro('Training  exist  !', 3000)
+            setDayTokenBefore(categoryObj.category)
+            createTraining(formData, categoryObj.category)
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const createTraining = async (formData, id) => {
+        try {
+            const token = localStorage.getItem('@TOKEN')
+            const dayIdToken = localStorage.getItem('@DAYTOKEN')
+            const { data } = await api.post(`/training/${dayIdToken}`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            setDayTokenBefore(id)
+            clickDayCalendar()
+            toastSuccess('Treino cirado com sucesso !', 2000)
+        } catch (error) {
+            console.log(error.message)
+            loadUser()
+        }
+    }
 
     // ////////////////////////////////////////////////////////////////////////
 
@@ -413,15 +332,12 @@ export const ExampleProvider = ({ children }) => {
             });
             setdaysAll(daysAll2.data)
             clickDayCalendar()
-            takeDayGet(categoryParam)
+            setDayTokenBefore(categoryParam)
             toastSuccess('Treino atualizado !', 2000)
         } catch (error) {
             console.log(error.message)
             loadUser()
-        } finally {
-            setatualizou(!atualizou)
         }
-
     }
 
     const delTrainingDay = async (formData) => {
@@ -436,7 +352,7 @@ export const ExampleProvider = ({ children }) => {
 
             toastSuccess('Treino deletado !', 2000)
             takeTrainingCategoryDay()
-            takeDayGet(categoryParam)
+            setDayTokenBefore(categoryParam)
         } catch (error) {
             console.log(error)
             loadUser()
@@ -500,6 +416,8 @@ export const ExampleProvider = ({ children }) => {
     const userLogoutClearDay = () => {
         setDate(new Date().toLocaleDateString())
 
+        setdiaAtual({});
+        setdaysAll([])
         localStorage.removeItem('@DAYTOKEN')
         localStorage.removeItem('@CATEGORYPARAM')
 
@@ -535,7 +453,7 @@ export const ExampleProvider = ({ children }) => {
             clickDayCalendar, delTrainingDay, diaAtual,
             takeTrainingCategoryDay, patchTrainingDay, editingTraining, seteditingTraining,
             isOpenTrainingFill, setisOpenTrainingFill, treinosDoDia, dateTemplate,
-            date, setDate, daysAll, trainingAll, takeDayGet, userLogoutClearDay, createTraining, training, days,
+            date, setDate, daysAll, userLogoutClearDay, createTraining,
             createDay, groups, userLogin, userPost,
             toastSuccess, toastErro,
             modalRef, buttonRef, userMETA,
@@ -544,7 +462,8 @@ export const ExampleProvider = ({ children }) => {
             isOpen2, setIsOpen2,
             visibleModal, setVisibleModal,
             loadUser, numberMetasGreen,
-            useRedirect
+            useRedirect,
+            setDayTokenBefore
         }}>
             {children}
         </ExampleContext.Provider>

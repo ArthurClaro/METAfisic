@@ -22,14 +22,12 @@ import Footer from "./Footer";
 
 function TrainingMain() {
 
-    const { toastErro, createDay, numberMetasGreen, seteditingTraining, diaAtual, isOpenTrainingFill, setisOpenTrainingFill, takeTrainingCategoryDay, createTraining, treinosDoDia, takeDayGet, dateTemplate, date, setDate } = useProductsContext()
+    const { setDayTokenBefore, toastErro, createDay, numberMetasGreen, seteditingTraining, diaAtual, isOpenTrainingFill, setisOpenTrainingFill, takeTrainingCategoryDay, treinosDoDia, takeDayGet, dateTemplate, date, setDate } = useProductsContext()
     const { id } = useParams()
-    // braço? 
-    // console.log(String(id))
 
     useEffect(() => {
         (async () => {
-            await takeDayGet(id)
+            await setDayTokenBefore(id)
             await takeTrainingCategoryDay()
         })()
     }, []);
@@ -73,8 +71,7 @@ function TrainingMain() {
 
     const subtmit = (formData) => {
         let category_id = { category: id }
-        createDay(category_id)
-        createTraining(formData, String(id))
+        createDay(category_id, formData)
         reset()
     }
 
@@ -140,7 +137,7 @@ function TrainingMain() {
                         </div>
                     ) : (
                         <div>
-                            {diaAtual === undefined || diaAtual.length === 0 || new Date().toLocaleDateString() === new Date(date).toLocaleDateString() ? (
+                            {Object.keys(diaAtual).length == 0 && new Date().toLocaleDateString() === new Date(date).toLocaleDateString() || new Date(date).toLocaleDateString() == 'Invalid Date' ? (
                                 <h4>Vamos começar? Adicione algum treino ao seu dia.</h4>
                             ) : (
                                 <h4>Não corresponde ao dia atual ,espere pelo dia para adicionar novos treinos...</h4>
