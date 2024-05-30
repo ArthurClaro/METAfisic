@@ -251,7 +251,6 @@ export const ExampleProvider = ({ children }) => {
         } catch (error) {
             // console.log(error);
             loadUser()
-            toastErro("Usuário não logado.", 2000);
         }
     }
 
