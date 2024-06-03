@@ -1,6 +1,21 @@
 ![Design sem nome (2)](https://github.com/ArthurClaro/METAfisic/assets/124170421/d857e276-4146-424e-a6e8-1c381837cfc5)
 
-<div align="center">
+<h1 align="center">
+ <a href="https://meta-8hivg2ji8-arthurclaros-projects.vercel.app/">METAFISIC</a>
+</h1>
+
+<div align="left">
+  <a href="https://meta-8hivg2ji8-arthurclaros-projects.vercel.app/">
+    <img src="https://img.shields.io/badge/LINK%20Vercel-000000.svg?style=for-the-badge&logo=Vercel&labelColor=000">
+  </a>
+  <a href="https://metafisic.onrender.com/">
+    <img src="https://img.shields.io/badge/Database-000000.svg?style=for-the-badge&logo=Vercel&labelColor=000">
+  </a>
+</div>
+
+<br>
+
+<div align="left">
  <a href="#front-end">☑️ Front-End</a>
    <a href="#back-end">☑️ Back-End</a>
 </div>
@@ -32,6 +47,9 @@ A hipertrofia alvo é uma abordagem focada e personalizada para o desenvolviment
 - **Prisma**: Um ORM (Object-Relational Mapping) para Node.js e TypeScript.
 - **TypeScript**: Um superset de JavaScript que adiciona tipagem estática ao código.
 - **@mui/material**: Uma biblioteca de componentes de interface de usuário que implementa o Material Design.
+- **PostgreSQL 16**: Um sistema de gerenciamento de banco de dados relacional avançado e de código aberto.
+- **Sass**: Um pré-processador CSS que adiciona funcionalidades como variáveis, aninhamento e mixins ao CSS.
+etc ...
 
 ## Rotas Disponíveis
 
@@ -504,4 +522,4 @@ Back-End (Render) :
 https://metafisic.onrender.com/
 
 Front-End (Vercel) : por enquanto
-https://meta-8hivg2ji8-arthurclaros-projects.vercel.app/
+
