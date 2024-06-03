@@ -6,6 +6,8 @@ import {
     Annotation,
 } from "react-simple-maps";
 
+import points from '../../../features.json'
+
 const MapContact = () => {
     return (
         <ComposableMap
@@ -17,11 +19,10 @@ const MapContact = () => {
             }}
         >
             <Geographies
-                geography="src/features.json"
+                geography={points}
                 fill="#757575"
                 stroke="#FFFFFF"
                 strokeWidth={0.5}
-
             >
                 {({ geographies }) =>
                     geographies.map((geo) => (
