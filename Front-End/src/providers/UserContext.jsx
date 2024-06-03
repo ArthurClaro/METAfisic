@@ -124,11 +124,11 @@ export const ExampleProvider = ({ children }) => {
 
     const [groups, setgroups] = useState([]);
 
-    useEffect(() => {
-        (async () => {
-            await getGroups()
-        })()
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         await getGroups()
+    //     })()
+    // }, []);
 
     const [loading, setLoading] = useState(true);
 
@@ -169,6 +169,23 @@ export const ExampleProvider = ({ children }) => {
             // }, 100);
         }
     };
+
+
+    useEffect(() => {
+        const fetchGroups = async () => {
+            try {
+                setTimeout(() => {
+                    setLoading(false); // Marcar o carregamento como concluído após 5 segundos
+                    getGroups()
+                }, 5000); // Forçar o loader por 5 segundos (5000 milissegundos)
+            } catch (error) {
+                console.error('Erro ao buscar grupos:', error);
+                setLoading(false); // Em caso de erro, também marcar o carregamento como concluído
+            }
+        };
+        
+        fetchGroups(); // Chamada da função para buscar os grupos
+    }, []);
 
     const userLogin = async (formData) => {
         try {
