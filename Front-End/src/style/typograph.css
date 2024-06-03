@@ -1,0 +1,23 @@
+.text {
+  font-family: var(--font-primary);
+}
+.text.title {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--color-LogiLabel);
+  letter-spacing: 0.5px;
+}
+.text.label {
+  color: var(--color-LogiLabel);
+  font-size: 12.182px;
+  font-weight: 400;
+  line-height: 0px;
+}
+.text.dont {
+  color: var(--color-NBtn);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+}/*# sourceMappingURL=typograph.css.map */
