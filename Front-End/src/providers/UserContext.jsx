@@ -133,20 +133,6 @@ export const ExampleProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const getGroups = async () => {
-        // try {
-        //     setTimeout(() => {
-        //         setLoading(false);
-        //     }, 5000); 
-
-        //     if(loading==true){
-
-        //     }
-
-        // } catch (error) {
-        //     console.error('Erro ao buscar grupos:', error);
-        //     setLoading(false); 
-        // }
-
         try {
             const { data } = await api.get('/groups-muscles');
             const groupsWithImages = data.map(group => {
@@ -176,8 +162,7 @@ export const ExampleProvider = ({ children }) => {
             setgroups(groupsWithImages);
         } catch (error) {
             // console.log(error);
-            setLoading(false); 
-
+            setLoading(true);
         } finally {
             setTimeout(() => {
                 setLoading(false);
@@ -185,21 +170,6 @@ export const ExampleProvider = ({ children }) => {
             // }, 100);
         }
     };
-
-    // useEffect(() => {
-    //     const fetchGroups = async () => {
-    //         try {
-    //             setTimeout(() => {
-    //                 setLoading(false);
-    //                 getGroups()
-    //             }, 5000); 
-    //         } catch (error) {
-    //             console.error('Erro ao buscar grupos:', error);
-    //             setLoading(false); 
-    //         }
-    //     };
-    //     fetchGroups();
-    // }, []);
 
     const userLogin = async (formData) => {
         try {
