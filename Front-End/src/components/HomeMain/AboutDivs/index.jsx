@@ -29,7 +29,7 @@ function AboutDivs() {
 
     return (
         <>
-            <div className="card flex justify-content-center steps">
+            <div data-aos="zoom-in-down" data-aos-offset="300" className="card flex justify-content-center steps">
                 <Stepper ref={stepperRef}
                     style={{ flexBasis: 'auto' }}
                     orientation='vertical'
@@ -122,7 +122,7 @@ function AboutDivs() {
                 </Stepper>
             </div>
 
-            <Fieldset legend={legendTemplate}>
+            <Fieldset data-aos="zoom-in" data-aos-offset="300" legend={legendTemplate}>
                 <p className="m-0">
                     Como você evoluirá através do que chamamos de hipertrofia alvo? Sempre que você realizar um treino, você registrará quantas repetições, séries e volume de carga você realizou naquele determinado exercício. No final do seu dia, você terá o que chamamos de Volume Total de treino. Se o seu Volume Total for maior do que o do dia anterior, significa que você conseguiu alcançar sua hipertrofia alvo.
                 </p>

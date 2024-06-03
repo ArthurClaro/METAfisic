@@ -17,7 +17,7 @@ const MapContact = () => {
             }}
         >
             <Geographies
-                geography="/features.json"
+                geography="src/features.json"
                 fill="#757575"
                 stroke="#FFFFFF"
                 strokeWidth={0.5}
@@ -39,9 +39,9 @@ const MapContact = () => {
                     strokeLinecap: "round"
                 }}
             >
-                <text 
-                x="-8"
-                textAnchor="end" alignmentBaseline="middle" fill="#00FF7F">
+                <text
+                    x="-8"
+                    textAnchor="end" alignmentBaseline="middle" fill="#00FF7F">
                     {"Paris"}
                 </text>
             </Annotation>

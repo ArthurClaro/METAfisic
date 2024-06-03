@@ -11,6 +11,8 @@ import peitoImage from '../assets/groupsM/peito.png';
 import cardioImage from '../assets/groupsM/cardio.png';
 import bracoImage from '../assets/groupsM/braço.png';
 
+import AOS from 'aos';
+
 
 export const ExampleContext = createContext({})
 
@@ -128,6 +130,8 @@ export const ExampleProvider = ({ children }) => {
         })()
     }, []);
 
+    const [loading, setLoading] = useState(true);
+
     const getGroups = async () => {
         try {
             const { data } = await api.get('/groups-muscles');
@@ -158,6 +162,11 @@ export const ExampleProvider = ({ children }) => {
             setgroups(groupsWithImages);
         } catch (error) {
             // console.log(error);
+        } finally {
+            setTimeout(() => {
+                setLoading(false);
+            }, 5000);
+            // }, 100);
         }
     };
 
@@ -251,6 +260,7 @@ export const ExampleProvider = ({ children }) => {
         } catch (error) {
             // console.log(error);
             loadUser()
+            setVisibleModal(true)
         }
     }
 
@@ -433,6 +443,7 @@ export const ExampleProvider = ({ children }) => {
         const navigate = useNavigate();
 
         useEffect(() => {
+            AOS.init();
             if (redirect) {
                 const timer = setTimeout(() => {
                     if (action) action();
@@ -465,7 +476,8 @@ export const ExampleProvider = ({ children }) => {
             visibleModal, setVisibleModal,
             loadUser, numberMetasGreen,
             useRedirect,
-            setDayTokenBefore
+            setDayTokenBefore,
+            loading, setLoading
         }}>
             {children}
         </ExampleContext.Provider>

@@ -104,7 +104,7 @@ function TrainingMain() {
             <main className={styles.container} id="main">
 
                 <section className={styles.sec1} >
-                    <h2 className="singUp">Dias de Ofenssiva ( <span>{Object.keys(numberMetasGreen).length}</span> )</h2>
+                    <h2 className="singUp">Dias de Ofenssiva (<span>{Object.keys(numberMetasGreen).length}</span>)</h2>
                     <Calendar locale="es" value={date} onChange={(e) => setDate(e.value)} dateTemplate={dateTemplate} inline />
                     <div className={styles.divOp}>
                         <h6>Não Batida</h6>
@@ -137,7 +137,7 @@ function TrainingMain() {
                         </div>
                     ) : (
                         <div>
-                            {Object.keys(diaAtual).length == 0 && new Date().toLocaleDateString() === new Date(date).toLocaleDateString() || new Date(date).toLocaleDateString() == 'Invalid Date' ? (
+                            {diaAtual == undefined || Object.keys(diaAtual).length == 0 && new Date().toLocaleDateString() === new Date(date).toLocaleDateString() || Object.keys(diaAtual).length == 0 && new Date().toLocaleDateString() === date || new Date(date).toLocaleDateString() == 'Invalid Date' ? (
                                 <h4>Vamos começar? Adicione algum treino ao seu dia.</h4>
                             ) : (
                                 <h4>Não corresponde ao dia atual ,espere pelo dia para adicionar novos treinos...</h4>

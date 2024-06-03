@@ -55,10 +55,14 @@
     h2 {
         margin-bottom: 30px;
         color: white;
+        white-space: normal;
+        @media (max-width:362px) {
+            letter-spacing: 2px;
+        }
 
         span {
-            margin: 0 5px;
             color: #00FF7F;
+            display: contents;
         }
     }
 
