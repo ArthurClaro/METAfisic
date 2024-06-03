@@ -16,8 +16,10 @@
 <br>
 
 <div align="left">
+	 <h3>
  <a href="#front-end">☑️ Front-End</a>
    <a href="#back-end">☑️ Back-End</a>
+		   </h3>
 </div>
 
 # Bem-vindo ao METAFISIC!
