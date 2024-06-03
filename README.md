@@ -1,7 +1,7 @@
 ![Design sem nome (2)](https://github.com/ArthurClaro/METAfisic/assets/124170421/d857e276-4146-424e-a6e8-1c381837cfc5)
 
 <div align="center">
-   <a href="#☑️ Front-End">Front-End</a>
+   <a href="#☑️-Front-End">Front-End</a>
    <a href="#documentation-in-english">Back-End</a>
 </div>
 
