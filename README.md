@@ -1,4 +1,6 @@
-![Captura de tela 2024-06-03 130747](https://github.com/ArthurClaro/METAfisic/assets/124170421/cf191c09-7a5b-4841-a102-d88e0203a4ba)
+
+![Design sem nome (2)](https://github.com/ArthurClaro/METAfisic/assets/124170421/d857e276-4146-424e-a6e8-1c381837cfc5)
+
 
 
 DER (Diagrama de Entidade e Relacionamento) : 
