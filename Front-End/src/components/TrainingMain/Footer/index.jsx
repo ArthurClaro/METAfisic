@@ -6,7 +6,7 @@ import 'primeicons/primeicons.css';
 import { useProductsContext } from "../../../providers/UserContext";
 
 function Footer() {
-    const { useRedirect, userLogoutClearDay } = useProductsContext()
+    const { useRedirect, userLogoutClearDay, setVisibleModal } = useProductsContext()
 
     const list = document.querySelectorAll('.list')
     function activeLink() {
@@ -18,11 +18,12 @@ function Footer() {
         item.addEventListener('click', activeLink))
 
 
-    const handleRedirectToHome = useRedirect('/', userLogoutClearDay);
+    const handleRedirectToHome = useRedirect('/', userLogoutClearDay, 100);
 
     const handleClick = (e) => {
         e.preventDefault();
         handleRedirectToHome();
+        setVisibleModal(false)
     };
 
     return (

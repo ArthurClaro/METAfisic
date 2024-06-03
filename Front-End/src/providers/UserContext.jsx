@@ -251,14 +251,14 @@ export const ExampleProvider = ({ children }) => {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            localStorage.setItem('@DAYTOKEN', data[0].id)
+
             setdaysAll(data)
             const today = data.find(element => element.createdAt === new Date().toLocaleDateString());
             setdiaAtual(today);
+            localStorage.setItem('@DAYTOKEN', today.id)
 
             takeTrainingCategoryDay()
         } catch (error) {
-            // console.log(error);
             loadUser()
             setVisibleModal(true)
         }

@@ -22,7 +22,7 @@ import Footer from "./Footer";
 
 function TrainingMain() {
 
-    const { setDayTokenBefore, toastErro, createDay, numberMetasGreen, seteditingTraining, diaAtual, isOpenTrainingFill, setisOpenTrainingFill, takeTrainingCategoryDay, treinosDoDia, takeDayGet, dateTemplate, date, setDate } = useProductsContext()
+    const { clickDayCalendar,setDayTokenBefore, toastErro, createDay, numberMetasGreen, seteditingTraining, diaAtual, isOpenTrainingFill, setisOpenTrainingFill, takeTrainingCategoryDay, treinosDoDia, takeDayGet, dateTemplate, date, setDate } = useProductsContext()
     const { id } = useParams()
 
     useEffect(() => {
@@ -82,7 +82,7 @@ function TrainingMain() {
         localStorage.setItem('@ID_TRAINING', training.id)
         setisOpenTrainingFill(true)
         seteditingTraining(training)
-        takeDayGet(id)
+        setDayTokenBefore(id)
     }
 
     const columnNameTemplate = () => {
