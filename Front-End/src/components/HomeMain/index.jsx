@@ -75,7 +75,7 @@ function HomeMain() {
         }, 1000);
     }
 
-    console.log(loading, groups)
+    // console.log(loading, groups)
     return (
         <>
             {loading && groups.length == 0 ? (
