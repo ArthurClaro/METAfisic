@@ -13,8 +13,6 @@
   </a>
 </div>
 
-<br>
-
 <div align="left">
 	 <h3>
  <a href="#front-end">☑️ Front-End</a>
