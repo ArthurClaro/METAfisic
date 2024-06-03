@@ -512,14 +512,3 @@ No body returned for response
 O METAFISIC foi criado para ser seu parceiro na jornada de desenvolvimento muscular. Ao utilizar nosso sistema de hipertrofia alvo, você terá um caminho claro e eficaz para atingir seus objetivos. Estamos aqui para apoiá-lo a cada passo, garantindo que você alcance a melhor versão de si mesmo.
 
 ## Vamos começar essa jornada juntos?
-
-### 1. Instalando Dependências
-<br> DER (Diagrama de Entidade e Relacionamento) : 
-https://app.diagrams.net/#G1tgYEDPval-_ickFfs7RqkPxkXAIMcC1w#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D
-
-
-Back-End (Render) :
-https://metafisic.onrender.com/
-
-Front-End (Vercel) : por enquanto
-
