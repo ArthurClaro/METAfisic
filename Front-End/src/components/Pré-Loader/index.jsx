@@ -1,11 +1,11 @@
 function BeforeLoader() {
   return (
     <>
-      <div className="all">
+      <div className="divPreLoad">
 
         <div aria-label="Loading..." role="status" className="loader1">
           <div>
-            <svg className="icon" viewBox="0 0 256 256">
+            <svg className="spining" viewBox="0 0 256 256">
               <line x1="128" y1="32" x2="128" y2="64" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line>
               <line x1="195.9" y1="60.1" x2="173.3" y2="82.7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line>
               <line x1="224" y1="128" x2="192" y2="128" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></line>
@@ -21,12 +21,12 @@ function BeforeLoader() {
           <span className="loading-text">Tempo máximo de espera: (120s)</span>
         </div>
 
-        <div className="circ">
-          <div className="load">Loading . . . </div>
-          <div className="hands"></div>
-          <div className="body"></div>
-          <div className="head">
-            <div className="eye"></div>
+        <div className="circ1">
+          <div className="load1">Loading . . . </div>
+          <div className="hands1"></div>
+          <div className="body1"></div>
+          <div className="head1">
+            <div className="eye1"></div>
           </div>
         </div>
       </div>

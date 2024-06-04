@@ -1,5 +1,5 @@
 
-.all {
+.divPreLoad {
     display: flex;
     min-width: 100vw;
     min-height: 100vh;
@@ -21,7 +21,7 @@
     scale: 2;
 }
 
-.icon {
+.spining {
     height: 1.5rem;
     width: 1.5rem;
     animation: spin 1s linear infinite;
@@ -47,7 +47,7 @@
 
 // /////////////////////////////////////////
 
-.eye {
+.eye1 {
     width: 20px;
     height: 8px;
     background-color: rgba(240, 220, 220, 1);
@@ -58,7 +58,7 @@
     box-shadow: 40px 0px 0px 0px rgba(240, 220, 220, 1);
 }
 
-.head {
+.head1 {
     backface-visibility: hidden;
     position: relative;
     margin: -250px auto;
@@ -71,7 +71,7 @@
     animation-timing-function: ease-out;
 }
 
-.body {
+.body1 {
     position: relative;
     margin: 90px auto;
     width: 140px;
@@ -111,7 +111,7 @@
     }
 }
 
-.circ {
+.circ1 {
     backface-visibility: hidden;
     margin: 60px auto;
     width: 180px;
@@ -124,7 +124,7 @@
     overflow: hidden;
 }
 
-.hands {
+.hands1 {
     margin-top: 140px;
     width: 120px;
     height: 120px;
@@ -140,7 +140,7 @@
     animation-timing-function: ease-out;
 }
 
-.load {
+.load1 {
     position: absolute;
     width: 7ch;
     height: 32px;

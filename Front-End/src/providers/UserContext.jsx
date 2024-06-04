@@ -28,6 +28,8 @@ export const ExampleProvider = ({ children }) => {
             setDataLoad(false)
         } catch (error) {
             setDataLoad(true)
+        } finally {
+            setDataLoad(false)
         }
     }
     useEffect(() => {
