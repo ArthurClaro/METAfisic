@@ -18,6 +18,22 @@ export const ExampleContext = createContext({})
 
 export const ExampleProvider = ({ children }) => {
 
+    const [dataLoad, setDataLoad] = useState(false)
+
+    const arr = async () => {
+        setDataLoad(true)
+        try {
+            const response = await fetch('https://metafisic.onrender.com/')
+            const json = await response.text()
+            setDataLoad(false)
+        } catch (error) {
+            setDataLoad(true)
+        }
+    }
+    useEffect(() => {
+        arr()
+    }, []);
+
     const navigate = useNavigate();
 
     function toastSuccess(message, time) {
@@ -478,7 +494,8 @@ export const ExampleProvider = ({ children }) => {
             loadUser, numberMetasGreen,
             useRedirect,
             setDayTokenBefore,
-            loading, setLoading
+            loading, setLoading,
+            dataLoad, setDataLoad
         }}>
             {children}
         </ExampleContext.Provider>
