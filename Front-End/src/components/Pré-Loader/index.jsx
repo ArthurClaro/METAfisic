@@ -1,8 +1,25 @@
+import CountUp from 'react-countup';
+
 function BeforeLoader() {
   return (
     <>
       <div className="divPreLoad">
-
+        <CountUp
+          start={0}
+          end={120}
+          duration={120}
+          separator=" "
+          decimals={4}
+          decimal=","
+          suffix=" seconds"
+          onEnd={() => window.location.reload()}
+        >
+          {({ countUpRef, start }) => (
+            <div>
+              <span ref={countUpRef} />
+            </div>
+          )}
+        </CountUp>
         <div aria-label="Loading..." role="status" className="loader1">
           <div>
             <svg className="spining" viewBox="0 0 256 256">
