@@ -25,15 +25,21 @@ export const ExampleProvider = ({ children }) => {
         try {
             const response = await fetch('https://metafisic.onrender.com/')
             const json = await response.text()
-            setDataLoad(false)
         } catch (error) {
             setDataLoad(true)
         } finally {
             setDataLoad(false)
+            if (!localStorage.getItem('reloaded-META')) {
+                localStorage.setItem('reloaded-META', 'true');
+                window.location.reload();
+            }
         }
     }
+
     useEffect(() => {
-        arr()
+        if (!localStorage.getItem('reloaded-META')) {
+            arr();
+        }
     }, []);
 
     const navigate = useNavigate();
