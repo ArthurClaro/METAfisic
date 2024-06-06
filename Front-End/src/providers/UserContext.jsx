@@ -29,15 +29,15 @@ export const ExampleProvider = ({ children }) => {
             setDataLoad(true)
         } finally {
             setDataLoad(false)
-            if (!localStorage.getItem('reloaded-META')) {
-                localStorage.setItem('reloaded-META', 'true');
+            if (!sessionStorage.getItem('reloaded-META')) {
+                sessionStorage.setItem('reloaded-META', 'true');
                 window.location.reload();
             }
         }
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('reloaded-META')) {
+        if (!sessionStorage.getItem('reloaded-META')) {
             arr();
         }
     }, []);
