@@ -6,15 +6,16 @@ function BeforeLoader() {
       <div className="divPreLoad">
         <CountUp
           start={0}
-          end={120}
-          duration={120}
+          end={180}
+          duration={180}
+          delay={0}
           separator=" "
           decimals={4}
           decimal=","
           suffix=" seconds"
           onEnd={() => window.location.reload()}
         >
-          {({ countUpRef, start }) => (
+          {({ countUpRef }) => (
             <div>
               <span ref={countUpRef} />
             </div>
@@ -35,7 +36,7 @@ function BeforeLoader() {
             <span className="loading-text">Iniciando Database...</span>
           </div>
 
-          <span className="loading-text">Tempo máximo de espera: (120s)</span>
+          <span className="loading-text">Tempo máximo de espera: (180s)</span>
         </div>
 
         <div className="circ1">
