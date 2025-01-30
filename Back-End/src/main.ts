@@ -7,7 +7,7 @@ import cors from 'cors'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }), new ValidationPipe({ transform: true, transformOptions: { groups: ['transform'] } }))
-  await app.listen(3000);
+  await app.listen(3000, '0.0.0.0');
   // app.use(cors()
   // app.enableCors({
   //   origin: ['http://localhost:3000'],

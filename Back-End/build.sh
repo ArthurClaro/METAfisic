@@ -1,8 +1,7 @@
-// build.sh
 #!/usr/bin/env bash
 # exit on error
-set -o errexit
+# set -e   # (opcional)
 
 yarn
+yarn prisma generate
 yarn build
-yarn prisma migrate deploy
